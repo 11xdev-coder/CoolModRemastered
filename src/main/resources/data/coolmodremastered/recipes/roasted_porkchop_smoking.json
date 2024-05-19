@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smoking",
-  "category": "food",
-  "cookingtime": 50,
-  "ingredient": {
-    "item": "minecraft:cooked_porkchop"
-  },
-  "result": "coolmodremastered:roasted_porkchop"
-}

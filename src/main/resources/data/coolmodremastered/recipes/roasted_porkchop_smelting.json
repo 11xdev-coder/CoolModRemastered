@@ -1,9 +1,0 @@
-{
-  "type": "minecraft:smelting",
-  "category": "misc",
-  "cookingtime": 100,
-  "ingredient": {
-    "item": "minecraft:cooked_porkchop"
-  },
-  "result": "coolmodremastered:roasted_porkchop"
-}
