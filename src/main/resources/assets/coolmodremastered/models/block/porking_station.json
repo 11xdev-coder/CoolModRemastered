@@ -1,0 +1,12 @@
+{
+  "parent": "minecraft:block/cube",
+  "textures": {
+    "down": "coolmodremastered:block/porking_station_bottom",
+    "east": "coolmodremastered:block/porking_station_side",
+    "north": "coolmodremastered:block/porking_station_side",
+    "particle": "coolmodremastered:block/porking_station_bottom",
+    "south": "coolmodremastered:block/porking_station_side",
+    "up": "coolmodremastered:block/porking_station_top",
+    "west": "coolmodremastered:block/porking_station_side"
+  }
+}

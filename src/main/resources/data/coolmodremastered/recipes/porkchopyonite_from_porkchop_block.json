@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "category": "misc",
+  "ingredients": [
+    {
+      "item": "coolmodremastered:porkchop_block"
+    }
+  ],
+  "result": {
+    "item": "coolmodremastered:porkchopyonite",
+    "count": 9
+  }
+}

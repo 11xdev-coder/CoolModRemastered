@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "pattern": [
+    "###",
+    "###",
+    "###"
+  ],
+  "key": {
+    "#": {
+      "item": "coolmodremastered:porkchopyonite"
+    }
+  },
+  "result": {
+    "item": "coolmodremastered:porkchop_block"
+  }
+}
