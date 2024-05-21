@@ -1,10 +1,11 @@
 package net.qsef.coolmodremastered.block;
 
+import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.Item;
-import net.minecraft.world.level.block.Block;
-import net.minecraft.world.level.block.SoundType;
+import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
+import net.minecraft.world.level.block.state.properties.BlockSetType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -18,10 +19,41 @@ import java.util.function.Supplier;
 public class ModBlocks {
     public static final DeferredRegister<Block> BLOCKS = DeferredRegister.create(ForgeRegistries.BLOCKS, CoolModRemastered.MOD_ID);
 
+    public static final BlockSetType PorkchopSetType = new BlockSetType("porkchop", true, SoundType.GRAVEL,
+            SoundEvents.GRAVEL_BREAK, SoundEvents.PIG_AMBIENT, SoundEvents.GRAVEL_BREAK,
+            SoundEvents.PIG_AMBIENT, SoundEvents.GRAVEL_BREAK, SoundEvents.PIG_AMBIENT,
+            SoundEvents.GRAVEL_BREAK, SoundEvents.PIG_AMBIENT);
+
+    // PORKCHOP
     public static final RegistryObject<Block> PorkchopBlock = registerBlock("porkchop_block",
             () -> new Block(BlockBehaviour.Properties.of()
                     .sound(SoundType.GRAVEL) // use sounds from gravel
                     .strength(1F))); // and some basic strength
+
+    public static final RegistryObject<Block> PorkchopStairs = registerBlock("porkchop_stairs",
+            () -> new StairBlock(() -> ModBlocks.PorkchopBlock.get().defaultBlockState(),
+                    BlockBehaviour.Properties.copy(ModBlocks.PorkchopBlock.get())));
+
+    public static final RegistryObject<Block> PorkchopSlab = registerBlock("porkchop_slab",
+            () -> new SlabBlock(BlockBehaviour.Properties.copy(ModBlocks.PorkchopBlock.get())));
+
+    public static final RegistryObject<Block> PorkchopButton = registerBlock("porkchop_button",
+            () -> new ButtonBlock(BlockBehaviour.Properties.copy(ModBlocks.PorkchopBlock.get()),
+                    PorkchopSetType, 3, true));
+
+    public static final RegistryObject<Block> PorkchopPressurePlate = registerBlock("porkchop_plate",
+            () -> new PressurePlateBlock(PressurePlateBlock.Sensitivity.MOBS, BlockBehaviour.Properties.copy(ModBlocks.PorkchopBlock.get()),
+                    PorkchopSetType));
+
+    public static final RegistryObject<Block> PorkchopWall = registerBlock("porkchop_wall",
+            () -> new WallBlock(BlockBehaviour.Properties.copy(ModBlocks.PorkchopBlock.get())));
+
+    public static final RegistryObject<Block> PorkchopDoor = registerBlock("porkchop_door",
+            () -> new DoorBlock(BlockBehaviour.Properties.copy(ModBlocks.PorkchopBlock.get()).noOcclusion(), PorkchopSetType));
+
+    public static final RegistryObject<Block> PorkchopTrapdoor = registerBlock("porkchop_trapdoor",
+            () -> new TrapDoorBlock(BlockBehaviour.Properties.copy(ModBlocks.PorkchopBlock.get()).noOcclusion(), PorkchopSetType));
+    // PORKCHOP
 
     public static final RegistryObject<Block> PorkingStation = registerBlock("porking_station",
             () -> new PorkingStation(BlockBehaviour.Properties.of()

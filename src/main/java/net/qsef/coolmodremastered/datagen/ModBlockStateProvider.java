@@ -2,7 +2,7 @@ package net.qsef.coolmodremastered.datagen;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraft.world.level.block.Block;
+import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
@@ -29,6 +29,13 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         blockWithItemCustomModel(ModBlocks.PorkingStation, porkingStationModel);
         blockWithItem(ModBlocks.PorkchopBlock);
+        stairsBlock((StairBlock) ModBlocks.PorkchopStairs.get(), blockTexture(ModBlocks.PorkchopBlock.get()));
+        slabBlock((SlabBlock) ModBlocks.PorkchopSlab.get(), blockTexture(ModBlocks.PorkchopBlock.get()), blockTexture(ModBlocks.PorkchopBlock.get()));
+        buttonBlock((ButtonBlock) ModBlocks.PorkchopButton.get(), blockTexture(ModBlocks.PorkchopBlock.get()));
+        pressurePlateBlock((PressurePlateBlock) ModBlocks.PorkchopPressurePlate.get(), blockTexture(ModBlocks.PorkchopBlock.get()));
+        wallBlock((WallBlock) ModBlocks.PorkchopWall.get(), blockTexture(ModBlocks.PorkchopBlock.get()));
+        doorBlockWithRenderType((DoorBlock) ModBlocks.PorkchopDoor.get(), modLoc("block/porkchop_door_bottom"), modLoc("block/porkchop_door_top"), "cutout");
+        trapdoorBlockWithRenderType((TrapDoorBlock) ModBlocks.PorkchopTrapdoor.get(), modLoc("block/porkchop_trapdoor"), true, "cutout");
     }
 
     // creates a block with an item

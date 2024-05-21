@@ -30,6 +30,16 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.PorkingStation.get());
 
         this.tag(BlockTags.MINEABLE_WITH_HOE)
-                .add(ModBlocks.PorkchopBlock.get());
+                .add(ModBlocks.PorkchopBlock.get())
+                .add(ModBlocks.PorkchopStairs.get())
+                .add(ModBlocks.PorkchopButton.get())
+                .add(ModBlocks.PorkchopSlab.get())
+                .add(ModBlocks.PorkchopWall.get())
+                .add(ModBlocks.PorkchopPressurePlate.get())
+                .add(ModBlocks.PorkchopDoor.get())
+                .add(ModBlocks.PorkchopTrapdoor.get());
+
+        this.tag(BlockTags.WALLS)
+                .add(ModBlocks.PorkchopWall.get());
     }
 }
