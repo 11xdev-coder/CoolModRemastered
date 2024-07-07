@@ -11,6 +11,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.qsef.coolmodremastered.CoolModRemastered;
+import net.qsef.coolmodremastered.block.custom.IronFurnaceBlock;
 import net.qsef.coolmodremastered.block.custom.PorkingStation;
 import net.qsef.coolmodremastered.item.ModItems;
 
@@ -60,6 +61,9 @@ public class ModBlocks {
                     .sound(SoundType.STONE)
                     .strength(3f)
                     .requiresCorrectToolForDrops()));
+
+    public static final RegistryObject<Block> IronFurnace = registerBlock("iron_furnace",
+            () -> new IronFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
 
     // example ore block
 //    private static final RegistryObject<Block> ORE_BLOCK = registerBlock("ore_block",

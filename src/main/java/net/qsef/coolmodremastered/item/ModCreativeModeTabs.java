@@ -42,6 +42,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModBlocks.PorkchopWall.get());
                         output.accept(ModBlocks.PorkchopDoor.get());
                         output.accept(ModBlocks.PorkchopTrapdoor.get());
+                        output.accept(ModBlocks.IronFurnace.get());
                     })
                     .build());
 

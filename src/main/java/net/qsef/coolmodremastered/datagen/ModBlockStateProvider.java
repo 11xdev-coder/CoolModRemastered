@@ -28,6 +28,18 @@ public class ModBlockStateProvider extends BlockStateProvider {
                 .texture("particle", new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station_bottom"));
 
         blockWithItemCustomModel(ModBlocks.PorkingStation, porkingStationModel);
+
+        ModelFile ironFurnaceModel = models().cube("iron_furnace",
+                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station_bottom"),
+                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station_top"),
+                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station"),
+                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station"),
+                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station"),
+                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station"))
+                .texture("particle", new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station_bottom"));
+
+        blockWithItemCustomModel(ModBlocks.IronFurnace, ironFurnaceModel);
+
         blockWithItem(ModBlocks.PorkchopBlock);
         stairsBlock((StairBlock) ModBlocks.PorkchopStairs.get(), blockTexture(ModBlocks.PorkchopBlock.get()));
         slabBlock((SlabBlock) ModBlocks.PorkchopSlab.get(), blockTexture(ModBlocks.PorkchopBlock.get()), blockTexture(ModBlocks.PorkchopBlock.get()));

@@ -1,6 +1,7 @@
 package net.qsef.coolmodremastered;
 
 import com.mojang.logging.LogUtils;
+import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.item.CreativeModeTabs;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.common.MinecraftForge;
@@ -13,8 +14,12 @@ import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.qsef.coolmodremastered.block.ModBlocks;
+import net.qsef.coolmodremastered.block.entity.ModBlockEntities;
 import net.qsef.coolmodremastered.item.ModCreativeModeTabs;
 import net.qsef.coolmodremastered.item.ModItems;
+import net.qsef.coolmodremastered.recipe.ModRecipes;
+import net.qsef.coolmodremastered.screen.IronFurnaceScreen;
+import net.qsef.coolmodremastered.screen.ModMenuTypes;
 import org.slf4j.Logger;
 
 // The value here should match an entry in the META-INF/mods.toml file
@@ -32,6 +37,11 @@ public class CoolModRemastered {
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
+
+        ModBlockEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
+
+        ModRecipes.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);
@@ -62,7 +72,7 @@ public class CoolModRemastered {
     public static class ClientModEvents {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
-
+            MenuScreens.register(ModMenuTypes.IronFurnaceMenu.get(), IronFurnaceScreen::new);
         }
     }
 }

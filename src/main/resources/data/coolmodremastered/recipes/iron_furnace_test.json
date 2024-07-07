@@ -1,0 +1,12 @@
+{
+  "type": "coolmodremastered:iron_furnace_smelting",
+
+  "input": {
+    "item": "minecraft:porkchop"
+  },
+  "output": {
+    "item": "minecraft:coal",
+    "count": 2
+  },
+  "experience": 0.35
+}
