@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "coolmodremastered:item/emerald_staff_2d"
+  }
+}

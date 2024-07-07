@@ -11,6 +11,7 @@ import net.qsef.coolmodremastered.CoolModRemastered;
 public class ModTags {
     public static class Blocks {
         public static final TagKey<Block> PORKCHOP_BLOCKS = tag("porkchop_blocks");
+        public static final TagKey<Block> NEEDS_PORKCHOPYONITE_TOOL = tag("needs_porkchopyonite_tool");
 
         public static TagKey<Block> tag(String name) {
             return BlockTags.create(new ResourceLocation(CoolModRemastered.MOD_ID, name));

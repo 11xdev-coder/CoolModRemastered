@@ -34,12 +34,25 @@ public class ModItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(ModBlocks.PorkchopSlab);
         evenSimplerBlockItem(ModBlocks.PorkchopPressurePlate);
         trapdoorItem(ModBlocks.PorkchopTrapdoor);
+
+        handheldItem(ModItems.PorkchopyoniteSword);
+        handheldItem(ModItems.PorkchopyonitePickaxe);
+        handheldItem(ModItems.PorkchopyoniteAxe);
+        handheldItem(ModItems.PorkchopyoniteShovel);
+        handheldItem(ModItems.PorkchopyoniteHoe);
     }
 
     // item model with only parent (used for 3d block items)
     public void evenSimplerBlockItem(RegistryObject<Block> block) {
         this.withExistingParent(CoolModRemastered.MOD_ID + ":" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath(),
                 modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath()));
+    }
+
+    // handheld for tools, for more 3d look
+    private ItemModelBuilder handheldItem(RegistryObject<Item> item) {
+        return withExistingParent(item.getId().getPath(),
+                new ResourceLocation("item/handheld")).texture("layer0",
+                new ResourceLocation(CoolModRemastered.MOD_ID, "item/" + item.getId().getPath()));
     }
 
     // creates a basic 2d item

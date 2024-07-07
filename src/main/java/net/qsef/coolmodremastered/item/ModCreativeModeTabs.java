@@ -26,6 +26,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.PigSoul.get());
                         output.accept(ModItems.PorkBurger.get());
                         output.accept(ModItems.RoastedPorkchop.get());
+                        output.accept(ModItems.EmeraldStaff.get());
+                        output.accept(ModItems.PorkchopyoniteSword.get());
+                        output.accept(ModItems.PorkchopyonitePickaxe.get());
+                        output.accept(ModItems.PorkchopyoniteAxe.get());
+                        output.accept(ModItems.PorkchopyoniteShovel.get());
+                        output.accept(ModItems.PorkchopyoniteHoe.get());
 
                         output.accept(ModBlocks.PorkchopBlock.get());
                         output.accept(ModBlocks.PorkingStation.get());

@@ -1,0 +1,18 @@
+{
+  "parent": "minecraft:item/handheld",
+  "loader": "forge:separate_transforms",
+  "base": {
+    "parent": "coolmodremastered:item/emerald_staff_3d"
+  },
+  "perspectives": {
+    "gui": {
+      "parent": "coolmodremastered:item/emerald_staff_2d"
+    },
+    "ground": {
+      "parent": "coolmodremastered:item/emerald_staff_2d"
+    },
+    "fixed": {
+      "parent": "coolmodremastered:item/emerald_staff_2d"
+    }
+  }
+}
