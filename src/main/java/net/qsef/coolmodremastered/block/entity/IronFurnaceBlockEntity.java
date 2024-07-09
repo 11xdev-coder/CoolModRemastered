@@ -4,20 +4,25 @@ import com.mojang.logging.LogUtils;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
+import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
+import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.*;
+import net.minecraft.world.Container;
+import net.minecraft.world.entity.ExperienceOrb;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.RecipeHolder;
-import net.minecraft.world.item.crafting.RecipeManager;
-import net.minecraft.world.item.crafting.RecipeType;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.entity.BaseContainerBlockEntity;
@@ -25,6 +30,7 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.entity.FurnaceBlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
 import net.minecraftforge.common.util.LazyOptional;
@@ -32,15 +38,18 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.qsef.coolmodremastered.CoolModRemastered;
+import net.qsef.coolmodremastered.block.base.IHorizontalDirectionalBlock;
 import net.qsef.coolmodremastered.recipe.IronFurnaceRecipe;
 import net.qsef.coolmodremastered.recipe.ModRecipes;
 import net.qsef.coolmodremastered.screen.IronFurnaceMenu;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
+import java.awt.*;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 public class IronFurnaceBlockEntity extends BlockEntity implements MenuProvider, Container, Nameable, RecipeCraftingHolder, StackedContentsCompatible {
     private static final int INPUT_SLOT = 0;
@@ -115,14 +124,9 @@ public class IronFurnaceBlockEntity extends BlockEntity implements MenuProvider,
     }
 
     public void drops() {
-//        SimpleContainer inventory = new SimpleContainer(itemHandler.getSlots()); // create a container with same amount of slots
-//        for (int i = 0; i < itemHandler.getSlots(); i++) {
-//            inventory.setItem(i, itemHandler.getStackInSlot(i));
-//        }
-//
-//        if (this.level != null) {
-//            Containers.dropContents(this.level, this.worldPosition, inventory); // drop content of inventory at block position
-//        }
+        if (this.level != null) {
+            Containers.dropContents(this.level, this.worldPosition, items); // drop content of inventory at block position
+        }
     }
 
     @Override
@@ -153,11 +157,13 @@ public class IronFurnaceBlockEntity extends BlockEntity implements MenuProvider,
     }
 
     public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
+        // crafting logic
         if(hasInputItem() && hasRecipe(pLevel)) {
             increaseCraftingProgress();
             setChanged(pLevel, pPos, pState);
 
             if(hasFinished()) {
+                spawnXp(pLevel, pPos);
                 craftItem(pLevel);
                 resetProgress();
             }
@@ -200,6 +206,26 @@ public class IronFurnaceBlockEntity extends BlockEntity implements MenuProvider,
         RecipeHolder ironFurnaceRecipe = this.quickCheckIronFurnace.getRecipeFor(this, pLevel).orElse(null);
         if(ironFurnaceRecipe == null) return this.quickCheckSmelting.getRecipeFor(this, pLevel).orElse(null);
         return ironFurnaceRecipe;
+    }
+
+    private void spawnXp(Level pLevel, BlockPos pPos) {
+        if(pLevel instanceof ServerLevel pServerLevel) {
+            RecipeHolder recipeHolder = getCurrentRecipe(pLevel);
+            if(recipeHolder == null) return;
+            Recipe recipe = recipeHolder.value();
+
+            // get xp from the recipe
+            float xpAmount = 0;
+            if(recipe instanceof IronFurnaceRecipe ifr) {
+                xpAmount = ifr.getExperience();
+            } else if (recipe instanceof AbstractCookingRecipe acr) {
+                xpAmount = acr.getExperience();
+            }
+
+            int xpAmountInt = Mth.ceil(xpAmount);
+            Vec3 dropPos = new Vec3(pPos.getX() + 0.5f, pPos.getY() + 1f, pPos.getZ() + 0.5f);
+            ExperienceOrb.award(pServerLevel, dropPos, xpAmountInt);
+        }
     }
 
     private boolean canInsertItemIntoOutputSlot(Item item) {

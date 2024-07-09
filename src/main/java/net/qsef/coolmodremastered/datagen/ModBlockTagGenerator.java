@@ -21,13 +21,24 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider provider) {
         this.tag(ModTags.Blocks.PORKCHOP_BLOCKS)
-                .add(ModBlocks.PorkchopBlock.get()); // add porkchop blocks to the tag
+                .add(ModBlocks.PorkchopBlock.get())
+                .add(ModBlocks.PorkchopStairs.get())
+                .add(ModBlocks.PorkchopButton.get())
+                .add(ModBlocks.PorkchopSlab.get())
+                .add(ModBlocks.PorkchopWall.get())
+                .add(ModBlocks.PorkchopPressurePlate.get())
+                .add(ModBlocks.PorkchopDoor.get())
+                .add(ModBlocks.PorkchopTrapdoor.get()); // add porkchop blocks to the tag
 
         this.tag(BlockTags.NEEDS_STONE_TOOL)
                 .add(ModBlocks.PorkingStation.get());
 
+        this.tag(BlockTags.NEEDS_IRON_TOOL)
+                .add(ModBlocks.IronFurnace.get());
+
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
-                .add(ModBlocks.PorkingStation.get());
+                .add(ModBlocks.PorkingStation.get())
+                .add(ModBlocks.IronFurnace.get());
 
         this.tag(BlockTags.MINEABLE_WITH_HOE)
                 .add(ModBlocks.PorkchopBlock.get())

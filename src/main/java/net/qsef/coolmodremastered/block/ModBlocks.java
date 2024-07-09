@@ -63,9 +63,7 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> IronFurnace = registerBlock("iron_furnace",
-            () -> new IronFurnaceBlock(BlockBehaviour.Properties.of()
-                    .sound(SoundType.STONE)
-                    .strength(3f)
+            () -> new IronFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
                     .requiresCorrectToolForDrops()
                     .lightLevel((toint) -> 15)));
 

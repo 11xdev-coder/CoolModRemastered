@@ -7,6 +7,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.qsef.coolmodremastered.CoolModRemastered;
 import net.qsef.coolmodremastered.block.ModBlocks;
@@ -70,8 +71,22 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .unlockedBy(getHasName(ModBlocks.PorkchopBlock.get()), has(ModBlocks.PorkchopBlock.get()))
                 .save(recipeOutput);
 
+        // iron furnace block
+        ShapedRecipeBuilder.shaped(RecipeCategory.BUILDING_BLOCKS, ModBlocks.IronFurnace.get())
+                .pattern("ipi")
+                .pattern("ifi")
+                .pattern("ili")
+                .define('i', Items.IRON_BLOCK)
+                .define('p', Items.COOKED_PORKCHOP)
+                .define('f', Items.FURNACE)
+                .define('l', Items.LAVA_BUCKET)
+                .unlockedBy(getHasName(Items.LAVA_BUCKET), has(Items.LAVA_BUCKET))
+                .unlockedBy(getHasName(Items.IRON_BLOCK), has(Items.IRON_BLOCK))
+                .save(recipeOutput);
+
+        // porkchopyonite from cooked porkchop
         ironFurnaceSmelting(recipeOutput, RecipeCategory.FOOD, Items.COOKED_PORKCHOP,
-                new ItemStack(ModItems.Porkchopyonite.get(), 1), 0.35f, "porkchopyonite");
+                new ItemStack(ModItems.Porkchopyonite.get(), 1), 6f, "porkchopyonite");
     }
 
     protected static void smelting(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,

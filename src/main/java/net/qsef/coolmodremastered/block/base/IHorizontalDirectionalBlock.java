@@ -6,12 +6,12 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.HorizontalDirectionalBlock;
 import net.minecraft.world.level.block.Mirror;
 import net.minecraft.world.level.block.Rotation;
+import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 
 import java.util.function.Consumer;
-import java.util.function.Function;
 
 public interface IHorizontalDirectionalBlock {
     DirectionProperty FACING = HorizontalDirectionalBlock.FACING;

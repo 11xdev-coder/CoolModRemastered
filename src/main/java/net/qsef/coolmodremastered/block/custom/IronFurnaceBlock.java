@@ -2,6 +2,10 @@ package net.qsef.coolmodremastered.block.custom;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.sounds.SoundEvents;
+import net.minecraft.sounds.SoundSource;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -79,6 +83,37 @@ public class IronFurnaceBlock extends BaseEntityBlock implements IHorizontalDire
                 ((IronFurnaceBlockEntity)blockentity).setCustomName(pStack.getHoverName());
             }
         }
+    }
+
+    @Override
+    public void animateTick(BlockState pState, Level pLevel, BlockPos pPos, RandomSource pRandom) {
+        double x = (double)pPos.getX() + 0.5;
+        double y = pPos.getY();
+        double z = (double)pPos.getZ() + 0.5;
+        if (pRandom.nextDouble() < 0.1) {
+            pLevel.playLocalSound(x, y, z, SoundEvents.FURNACE_FIRE_CRACKLE, SoundSource.BLOCKS, 1.0F, 1.0F, false);
+        }
+
+        Direction direction = pState.getValue(FACING).getOpposite();
+        Direction.Axis axis = direction.getAxis();
+
+        for(int i = 0; i < 4; ++i) {
+            spawnParticles(x, y, z, pLevel, pRandom, direction, axis);
+        }
+    }
+
+    private void spawnParticles(double x, double y, double z, Level pLevel,
+                                RandomSource pRandom, Direction direction, Direction.Axis axis) {
+        double mult = 0.52;
+
+        double offset = pRandom.nextDouble() * 0.6 - 0.3;
+        double xAlongAxis = axis == Direction.Axis.X ? (double)direction.getStepX() * mult : offset;
+
+        double heightOffset = pRandom.nextDouble() * 6.0 / 16.0;
+        double zAlongAxis = axis == Direction.Axis.Z ? (double)direction.getStepZ() * mult : offset;
+
+        pLevel.addParticle(ParticleTypes.SMOKE, x + xAlongAxis, y + heightOffset, z + zAlongAxis, 0.0, 0.0, 0.0);
+        pLevel.addParticle(ParticleTypes.FLAME, x + xAlongAxis, y + heightOffset, z + zAlongAxis, 0.0, 0.0, 0.0);
     }
 
     @Nullable
