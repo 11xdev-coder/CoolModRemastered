@@ -2,16 +2,17 @@ package net.qsef.coolmodremastered.datagen;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.world.item.Item;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.AbstractCookingRecipe;
-import net.minecraft.world.item.crafting.Ingredient;
-import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.ShapedRecipe;
+import net.minecraft.world.item.crafting.*;
 import net.minecraft.world.level.ItemLike;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.qsef.coolmodremastered.CoolModRemastered;
 import net.qsef.coolmodremastered.block.ModBlocks;
+import net.qsef.coolmodremastered.datagen.recipebuilder.IronFurnaceRecipeBuilder;
 import net.qsef.coolmodremastered.item.ModItems;
+import net.qsef.coolmodremastered.recipe.IronFurnaceRecipe;
 
 import java.util.Iterator;
 import java.util.List;
@@ -68,6 +69,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .requires(ModBlocks.PorkchopBlock.get())
                 .unlockedBy(getHasName(ModBlocks.PorkchopBlock.get()), has(ModBlocks.PorkchopBlock.get()))
                 .save(recipeOutput);
+
+        ironFurnaceSmelting(recipeOutput, RecipeCategory.FOOD, Items.COOKED_PORKCHOP,
+                new ItemStack(ModItems.Porkchopyonite.get(), 1), 0.35f, "porkchopyonite");
     }
 
     protected static void smelting(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,
@@ -84,11 +88,19 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
     }
 
     protected static void cooking(RecipeOutput pRecipeOutput, RecipeSerializer<? extends AbstractCookingRecipe> pCookingSerializer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup, String pRecipeName) {
-        for(ItemLike itemlike : pIngredients) {
+        for (ItemLike itemlike : pIngredients) {
             SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), pCategory, pResult,
                             pExperience, pCookingTime, pCookingSerializer)
                     .group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
-                    .save(pRecipeOutput,  CoolModRemastered.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
+                    .save(pRecipeOutput, CoolModRemastered.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
         }
+    }
+
+    protected static void ironFurnaceSmelting(RecipeOutput pRecipeOutput, RecipeCategory pCategory, Item pInput,
+                                              ItemStack pOutput, float pExperience, String pGroup) {
+        IronFurnaceRecipeBuilder.ironFurnaceRecipe(pCategory, Ingredient.of(pInput), pOutput, pExperience)
+                .group(pGroup)
+                .unlockedBy(getHasName(pInput), has(pInput))
+                .save(pRecipeOutput, CoolModRemastered.MOD_ID + ":" + getItemName(pOutput.getItem()) + "_from_iron_furnace");
     }
 }

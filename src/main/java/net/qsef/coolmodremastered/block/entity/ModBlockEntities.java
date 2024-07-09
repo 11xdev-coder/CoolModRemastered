@@ -13,9 +13,8 @@ public class ModBlockEntities {
             DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, CoolModRemastered.MOD_ID);
 
     public static final RegistryObject<BlockEntityType<IronFurnaceBlockEntity>> IronFurnace_BE =
-            BLOCK_ENTITIES.register("ironfurnace_be", () -> BlockEntityType.Builder.of(
-                    IronFurnaceBlockEntity::new, ModBlocks.IronFurnace.get()).build(null)
-            );
+            BLOCK_ENTITIES.register("iron_furnace",
+                    () -> BlockEntityType.Builder.of(IronFurnaceBlockEntity::new, ModBlocks.IronFurnace.get()).build(null));
 
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);

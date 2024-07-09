@@ -33,13 +33,13 @@ public class CoolModRemastered {
     public CoolModRemastered() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
+        ModBlockEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
+
         ModCreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
-
-        ModBlockEntities.register(modEventBus);
-        ModMenuTypes.register(modEventBus);
 
         ModRecipes.register(modEventBus);
 
@@ -51,6 +51,7 @@ public class CoolModRemastered {
 
         // Register the item to a creative tab
         modEventBus.addListener(this::addCreative);
+        modEventBus.addListener(ClientModEvents::onClientSetup);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -65,14 +66,5 @@ public class CoolModRemastered {
     @SubscribeEvent
     public void onServerStarting(ServerStartingEvent event) {
 
-    }
-
-    // You can use EventBusSubscriber to automatically register all static methods in the class annotated with @SubscribeEvent
-    @Mod.EventBusSubscriber(modid = MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
-    public static class ClientModEvents {
-        @SubscribeEvent
-        public static void onClientSetup(FMLClientSetupEvent event) {
-            MenuScreens.register(ModMenuTypes.IronFurnaceMenu.get(), IronFurnaceScreen::new);
-        }
     }
 }

@@ -63,7 +63,10 @@ public class ModBlocks {
                     .requiresCorrectToolForDrops()));
 
     public static final RegistryObject<Block> IronFurnace = registerBlock("iron_furnace",
-            () -> new IronFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)));
+            () -> new IronFurnaceBlock(BlockBehaviour.Properties.of()
+                    .sound(SoundType.STONE)
+                    .strength(3f)
+                    .requiresCorrectToolForDrops()));
 
     // example ore block
 //    private static final RegistryObject<Block> ORE_BLOCK = registerBlock("ore_block",

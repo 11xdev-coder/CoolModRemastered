@@ -7,6 +7,7 @@ import net.minecraft.core.NonNullList;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.world.Container;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.crafting.Ingredient;
@@ -22,7 +23,7 @@ import net.qsef.coolmodremastered.CoolModRemastered;
 import net.qsef.coolmodremastered.block.ModBlocks;
 import org.jetbrains.annotations.Nullable;
 
-public class IronFurnaceRecipe implements Recipe<SimpleContainer> {
+public class IronFurnaceRecipe implements Recipe<Container> {
     private final Ingredient input;
     private final ItemStack output;
     private final float experience;
@@ -36,14 +37,12 @@ public class IronFurnaceRecipe implements Recipe<SimpleContainer> {
     }
 
     @Override
-    public boolean matches(SimpleContainer simpleContainer, Level level) {
-        if(level.isClientSide()) return false;
-
+    public boolean matches(Container simpleContainer, Level level) {
         return input.test(simpleContainer.getItem(0)); // 0 is our input slot
     }
 
     @Override
-    public ItemStack assemble(SimpleContainer simpleContainer, RegistryAccess registryAccess) {
+    public ItemStack assemble(Container simpleContainer, RegistryAccess registryAccess) {
         return output.copy();
     }
 
@@ -107,9 +106,8 @@ public class IronFurnaceRecipe implements Recipe<SimpleContainer> {
         @Override
         public void toNetwork(FriendlyByteBuf friendlyByteBuf, IronFurnaceRecipe ironFurnaceRecipe) {
             ironFurnaceRecipe.getInput().toNetwork(friendlyByteBuf);
+            friendlyByteBuf.writeItemStack(ironFurnaceRecipe.getOutput(), false);
             friendlyByteBuf.writeFloat(ironFurnaceRecipe.getExperience());
-
-            friendlyByteBuf.writeItem(ironFurnaceRecipe.getOutput());
         }
     }
 }

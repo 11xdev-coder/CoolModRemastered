@@ -29,14 +29,12 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         blockWithItemCustomModel(ModBlocks.PorkingStation, porkingStationModel);
 
-        ModelFile ironFurnaceModel = models().cube("iron_furnace",
-                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station_bottom"),
-                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station_top"),
-                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station"),
-                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station"),
-                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station"),
-                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station"))
-                .texture("particle", new ResourceLocation(CoolModRemastered.MOD_ID, "block/porking_station_bottom"));
+        // orientable -> side, front, top
+        ModelFile ironFurnaceModel = models().orientable("iron_furnace",
+                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/iron_furnace_side"),
+                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/iron_furnace_front"),
+                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/iron_furnace_top"))
+                .texture("particle", new ResourceLocation(CoolModRemastered.MOD_ID, "block/iron_furnace_front"));
 
         blockWithItemCustomModel(ModBlocks.IronFurnace, ironFurnaceModel);
 

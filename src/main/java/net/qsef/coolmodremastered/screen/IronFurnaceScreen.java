@@ -19,10 +19,11 @@ public class IronFurnaceScreen extends AbstractContainerScreen<IronFurnaceMenu> 
     @Override
     protected void init() {
         super.init();
+        this.titleLabelY -= 10;
     }
 
     @Override
-    protected void renderBg(GuiGraphics guiGraphics, float v, int i, int i1) {
+    protected void renderBg(GuiGraphics guiGraphics, float partialTicks, int mouseX, int mouseY) {
         RenderSystem.setShader(GameRenderer::getPositionTexShader);
         RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
         RenderSystem.setShaderTexture(0, TEXTURE);

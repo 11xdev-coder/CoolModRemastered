@@ -2,10 +2,16 @@ package net.qsef.coolmodremastered.screen;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
+import net.minecraft.world.Container;
+import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.entity.player.StackedContents;
 import net.minecraft.world.inventory.*;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.Recipe;
+import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.common.capabilities.ForgeCapabilities;
@@ -15,30 +21,35 @@ import net.qsef.coolmodremastered.block.entity.IronFurnaceBlockEntity;
 import org.jetbrains.annotations.Nullable;
 
 public class IronFurnaceMenu extends AbstractContainerMenu {
-    public final IronFurnaceBlockEntity blockEntity;
     private final Level level;
     private final ContainerData data;
+    private final Container container;
 
-    public IronFurnaceMenu(int pContainerId, Inventory inv, FriendlyByteBuf extraData) {
-        this(pContainerId, inv, inv.player.level().getBlockEntity(extraData.readBlockPos()), new SimpleContainerData(2));
+    private final static int INPUT_SLOT = 0;
+    private final static int OUTPUT_SLOT = 1;
+
+    public IronFurnaceMenu(int pContainerId, Inventory inv) {
+        this(pContainerId, inv, new SimpleContainer(2), new SimpleContainerData(2));
     }
 
-    public IronFurnaceMenu(int pContainerId, Inventory inv, BlockEntity entity, ContainerData data) {
+    public IronFurnaceMenu(int pContainerId, Inventory inv, FriendlyByteBuf buf) {
+        this(pContainerId, inv, new SimpleContainer(2), new SimpleContainerData(2));
+    }
+
+    public IronFurnaceMenu(int pContainerId, Inventory inv, Container pContainer, ContainerData data) {
         super(ModMenuTypes.IronFurnaceMenu.get(), pContainerId);
 
         checkContainerSize(inv, 2);
-        blockEntity = ((IronFurnaceBlockEntity) entity);
+        this.container = pContainer;
         this.level = inv.player.level();
         this.data = data;
 
         addPlayerInventory(inv);
         addPlayerHotbar(inv);
 
-        // add actual slots for our BlockEntity
-        this.blockEntity.getCapability(ForgeCapabilities.ITEM_HANDLER).ifPresent(iItemHandler -> {
-            this.addSlot(new SlotItemHandler(iItemHandler, 0, 80, 11));
-            this.addSlot(new SlotItemHandler(iItemHandler, 1, 80, 59));
-        });
+        // add actual slots for our Container
+        this.addSlot(new Slot(pContainer, INPUT_SLOT, 80, 11));
+        this.addSlot(new Slot(pContainer, OUTPUT_SLOT, 80, 59));
 
         addDataSlots(data);
     }
@@ -60,6 +71,7 @@ public class IronFurnaceMenu extends AbstractContainerMenu {
 
     // THIS YOU HAVE TO DEFINE!
     private static final int TE_INVENTORY_SLOT_COUNT = 2;  // must be the number of slots you have!
+
     @Override
     public ItemStack quickMoveStack(Player playerIn, int pIndex) {
         Slot sourceSlot = slots.get(pIndex);
@@ -95,7 +107,7 @@ public class IronFurnaceMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        return stillValid(ContainerLevelAccess.create(level, blockEntity.getBlockPos()), player, ModBlocks.IronFurnace.get());
+        return this.container.stillValid(player);
     }
 
     public boolean isCrafting() {
@@ -127,3 +139,4 @@ public class IronFurnaceMenu extends AbstractContainerMenu {
         }
     }
 }
+

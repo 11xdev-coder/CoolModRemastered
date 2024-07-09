@@ -1,6 +1,9 @@
 package net.qsef.coolmodremastered.recipe;
 
+import net.minecraft.core.registries.Registries;
+import net.minecraft.world.inventory.RecipeBookType;
 import net.minecraft.world.item.crafting.RecipeSerializer;
+import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -14,6 +17,7 @@ public class ModRecipes {
 
     public static final RegistryObject<RecipeSerializer> IronFurnaceSerializer =
             RECIPE_SERIALIZERS.register("iron_furnace_smelting", IronFurnaceRecipe.Serializer::new);
+
 
     public static void register(IEventBus eventBus) {
         RECIPE_SERIALIZERS.register(eventBus);
