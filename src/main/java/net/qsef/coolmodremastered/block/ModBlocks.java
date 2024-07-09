@@ -66,7 +66,8 @@ public class ModBlocks {
             () -> new IronFurnaceBlock(BlockBehaviour.Properties.of()
                     .sound(SoundType.STONE)
                     .strength(3f)
-                    .requiresCorrectToolForDrops()));
+                    .requiresCorrectToolForDrops()
+                    .lightLevel((toint) -> 15)));
 
     // example ore block
 //    private static final RegistryObject<Block> ORE_BLOCK = registerBlock("ore_block",

@@ -1,14 +1,7 @@
 package net.qsef.coolmodremastered.block.custom;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.chat.report.ReportEnvironment;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
-import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.OutgoingChatMessage;
-import net.minecraft.network.chat.PlayerChatMessage;
-import net.minecraft.server.level.ServerPlayer;
-import net.minecraft.sounds.SoundEvents;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.MenuProvider;
@@ -17,26 +10,20 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.BlockPlaceContext;
 import net.minecraft.world.level.Level;
-import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.entity.*;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import net.minecraft.world.phys.BlockHitResult;
+import net.qsef.coolmodremastered.block.base.IHorizontalDirectionalBlock;
 import net.qsef.coolmodremastered.block.entity.IronFurnaceBlockEntity;
 import net.qsef.coolmodremastered.block.entity.ModBlockEntities;
-import net.qsef.coolmodremastered.screen.IronFurnaceScreen;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Optional;
-
-public class IronFurnaceBlock extends BaseEntityBlock {
-    public static final DirectionProperty FACING = HorizontalDirectionalBlock.FACING;
-
+public class IronFurnaceBlock extends BaseEntityBlock implements IHorizontalDirectionalBlock {
     public IronFurnaceBlock(Properties pProperties) {
         super(pProperties);
-        this.registerDefaultState(this.stateDefinition.any().setValue(FACING, Direction.NORTH));
+        IRegisterDefaultState(pState -> registerDefaultState((BlockState) pState), this.stateDefinition);
     }
 
     @Override
@@ -48,7 +35,6 @@ public class IronFurnaceBlock extends BaseEntityBlock {
     @Override
     public BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
         return new IronFurnaceBlockEntity(blockPos, blockState);
-        //FurnaceBlockEntity
     }
 
     @Override
@@ -98,21 +84,21 @@ public class IronFurnaceBlock extends BaseEntityBlock {
     @Nullable
     @Override
     public BlockState getStateForPlacement(BlockPlaceContext context) {
-        return this.defaultBlockState().setValue(FACING, context.getHorizontalDirection().getOpposite());
+        return IGetStateForPlacement(this, context);
     }
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(FACING);
+        ICreateBlockStateDefinition(builder);
     }
 
     @Override
     public BlockState rotate(BlockState state, Rotation rotation) {
-        return state.setValue(FACING, rotation.rotate(state.getValue(FACING)));
+        return IRotate(state, rotation);
     }
 
     @Override
     public BlockState mirror(BlockState state, Mirror mirror) {
-        return state.rotate(mirror.getRotation(state.getValue(FACING)));
+        return IMirror(state, mirror);
     }
 }

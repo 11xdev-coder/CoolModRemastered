@@ -1,14 +1,18 @@
 package net.qsef.coolmodremastered.datagen;
 
+import net.minecraft.core.Direction;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
 import net.minecraftforge.client.model.generators.BlockStateProvider;
+import net.minecraftforge.client.model.generators.ConfiguredModel;
 import net.minecraftforge.client.model.generators.ModelFile;
 import net.minecraftforge.common.data.ExistingFileHelper;
 import net.minecraftforge.registries.RegistryObject;
 import net.qsef.coolmodremastered.CoolModRemastered;
 import net.qsef.coolmodremastered.block.ModBlocks;
+import net.qsef.coolmodremastered.block.base.IHorizontalDirectionalBlock;
+import net.qsef.coolmodremastered.block.custom.IronFurnaceBlock;
 
 public class ModBlockStateProvider extends BlockStateProvider {
     public ModBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -29,14 +33,8 @@ public class ModBlockStateProvider extends BlockStateProvider {
 
         blockWithItemCustomModel(ModBlocks.PorkingStation, porkingStationModel);
 
-        // orientable -> side, front, top
-        ModelFile ironFurnaceModel = models().orientable("iron_furnace",
-                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/iron_furnace_side"),
-                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/iron_furnace_front"),
-                        new ResourceLocation(CoolModRemastered.MOD_ID, "block/iron_furnace_top"))
-                .texture("particle", new ResourceLocation(CoolModRemastered.MOD_ID, "block/iron_furnace_front"));
-
-        blockWithItemCustomModel(ModBlocks.IronFurnace, ironFurnaceModel);
+        horizontalDirectionalBlockWithItem("iron_furnace", "block/iron_furnace_side", "block/iron_furnace_front",
+                "block/iron_furnace_top", (IHorizontalDirectionalBlock) ModBlocks.IronFurnace.get());
 
         blockWithItem(ModBlocks.PorkchopBlock);
         stairsBlock((StairBlock) ModBlocks.PorkchopStairs.get(), blockTexture(ModBlocks.PorkchopBlock.get()));
@@ -56,5 +54,24 @@ public class ModBlockStateProvider extends BlockStateProvider {
     private void blockWithItemCustomModel(RegistryObject<Block> block, ModelFile model) {
         simpleBlock(block.get(), model);
         simpleBlockItem(block.get(), model);
+    }
+
+    private void horizontalDirectionalBlockWithItem(String name, String pathSide, String pathFront, String pathTop, IHorizontalDirectionalBlock block) {
+        // orientable -> side, front, top
+        ModelFile model = models().orientable(name,
+                        new ResourceLocation(CoolModRemastered.MOD_ID, pathSide),
+                        new ResourceLocation(CoolModRemastered.MOD_ID, pathFront),
+                        new ResourceLocation(CoolModRemastered.MOD_ID, pathTop))
+                .texture("particle", new ResourceLocation(CoolModRemastered.MOD_ID, pathFront));
+
+        getVariantBuilder((Block) block).forAllStates(state -> {
+            Direction direction = state.getValue(block.FACING);
+            return ConfiguredModel.builder()
+                    .modelFile(model)
+                    .rotationY((int) direction.toYRot())
+                    .build();
+        });
+
+        simpleBlockItem((Block) block, model);
     }
 }

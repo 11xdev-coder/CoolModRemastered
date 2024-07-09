@@ -19,7 +19,7 @@ public class IronFurnaceScreen extends AbstractContainerScreen<IronFurnaceMenu> 
     @Override
     protected void init() {
         super.init();
-        this.titleLabelY -= 10;
+        this.titleLabelY -= 4;
     }
 
     @Override
