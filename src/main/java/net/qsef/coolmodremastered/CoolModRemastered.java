@@ -33,15 +33,16 @@ public class CoolModRemastered {
     public CoolModRemastered() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
 
-        ModBlockEntities.register(modEventBus);
-        ModMenuTypes.register(modEventBus);
-
         ModCreativeModeTabs.register(modEventBus);
 
         ModItems.register(modEventBus);
         ModBlocks.register(modEventBus);
 
+        ModBlockEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
+
         ModRecipes.register(modEventBus);
+
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);

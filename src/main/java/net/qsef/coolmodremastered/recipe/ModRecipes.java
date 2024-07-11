@@ -15,7 +15,7 @@ public class ModRecipes {
     public static final DeferredRegister<RecipeSerializer<?>> RECIPE_SERIALIZERS =
             DeferredRegister.create(ForgeRegistries.RECIPE_SERIALIZERS, CoolModRemastered.MOD_ID);
 
-    public static final RegistryObject<RecipeSerializer> IronFurnaceSerializer =
+    public static final RegistryObject<RecipeSerializer<IronFurnaceRecipe>> IronFurnaceSerializer =
             RECIPE_SERIALIZERS.register("iron_furnace_smelting", IronFurnaceRecipe.Serializer::new);
 
 

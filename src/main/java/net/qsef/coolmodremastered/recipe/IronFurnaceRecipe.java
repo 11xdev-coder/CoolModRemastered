@@ -28,7 +28,12 @@ public class IronFurnaceRecipe implements Recipe<Container> {
     private final ItemStack output;
     private final float experience;
 
-    public static final RecipeType<IronFurnaceRecipe> RECIPE_TYPE = new RecipeType<>(){};
+    public static final RecipeType<IronFurnaceRecipe> RECIPE_TYPE = new RecipeType<>(){
+        @Override
+        public String toString() {
+            return CoolModRemastered.MOD_ID + ":iron_furnace_smelting";
+        }
+    };
 
     public IronFurnaceRecipe(Ingredient input, ItemStack output, float experience) {
         this.input = input;
@@ -96,9 +101,8 @@ public class IronFurnaceRecipe implements Recipe<Container> {
         @Override
         public @Nullable IronFurnaceRecipe fromNetwork(FriendlyByteBuf friendlyByteBuf) {
             Ingredient input = Ingredient.fromNetwork(friendlyByteBuf);
-            float experience = friendlyByteBuf.readFloat();
-
             ItemStack output = friendlyByteBuf.readItem();
+            float experience = friendlyByteBuf.readFloat();
 
             return new IronFurnaceRecipe(input, output, experience);
         }
