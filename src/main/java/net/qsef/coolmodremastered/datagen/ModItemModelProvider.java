@@ -25,6 +25,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         simpleItem(ModItems.PorkBurger);
         simpleItem(ModItems.Porkchopyonite);
         simpleItem(ModItems.RoastedPorkchop);
+        simpleItem(ModItems.PorkchopUpgrade);
 
         // Porkchop furniture
         simpleBlockItem(ModBlocks.PorkchopDoor);
@@ -35,6 +36,7 @@ public class ModItemModelProvider extends ItemModelProvider {
         evenSimplerBlockItem(ModBlocks.PorkchopPressurePlate);
         trapdoorItem(ModBlocks.PorkchopTrapdoor);
 
+        // porkchop tools
         handheldItem(ModItems.PorkchopyoniteSword);
         handheldItem(ModItems.PorkchopyonitePickaxe);
         handheldItem(ModItems.PorkchopyoniteAxe);

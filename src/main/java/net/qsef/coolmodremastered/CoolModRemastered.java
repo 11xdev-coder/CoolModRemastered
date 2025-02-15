@@ -15,6 +15,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.qsef.coolmodremastered.block.ModBlocks;
 import net.qsef.coolmodremastered.block.entity.ModBlockEntities;
+import net.qsef.coolmodremastered.entity.ModEntities;
 import net.qsef.coolmodremastered.item.ModCreativeModeTabs;
 import net.qsef.coolmodremastered.item.ModItems;
 import net.qsef.coolmodremastered.recipe.ModRecipes;
@@ -28,7 +29,7 @@ public class CoolModRemastered {
     // Define mod id in a common place for everything to reference
     public static final String MOD_ID = "coolmodremastered";
     // Directly reference a slf4j logger
-    private static final Logger LOGGER = LogUtils.getLogger();
+    public static final Logger LOGGER = LogUtils.getLogger();
 
     public CoolModRemastered() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
@@ -42,7 +43,7 @@ public class CoolModRemastered {
         ModMenuTypes.register(modEventBus);
 
         ModRecipes.register(modEventBus);
-
+        ModEntities.register(modEventBus);
 
         // Register the commonSetup method for modloading
         modEventBus.addListener(this::commonSetup);

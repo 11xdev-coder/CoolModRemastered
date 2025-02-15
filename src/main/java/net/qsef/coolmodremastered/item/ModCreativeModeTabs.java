@@ -21,6 +21,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.cool_tab")) // title, later translated in en_us.json
                     .displayItems((itemDisplayParameters, output) -> {
                         // all new items should be listed in here
+                        output.accept(ModItems.Bazooka.get());
                         output.accept(ModItems.Porkchopyonite.get());
                         output.accept(ModItems.PigRelic.get());
                         output.accept(ModItems.PigSoul.get());
@@ -32,6 +33,7 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.PorkchopyoniteAxe.get());
                         output.accept(ModItems.PorkchopyoniteShovel.get());
                         output.accept(ModItems.PorkchopyoniteHoe.get());
+                        output.accept(ModItems.PorkchopUpgrade.get());
 
                         output.accept(ModBlocks.PorkchopBlock.get());
                         output.accept(ModBlocks.PorkingStation.get());

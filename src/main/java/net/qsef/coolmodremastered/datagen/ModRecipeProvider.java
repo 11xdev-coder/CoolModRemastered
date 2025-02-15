@@ -34,6 +34,17 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         smoking(recipeOutput, COOKED_PORKCHOP, RecipeCategory.FOOD,
                 ModItems.RoastedPorkchop.get(), 0F, 50, "roasted_porkchop");
 
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.Bazooka.get())
+                    .pattern("xx ")
+                    .pattern("yir")
+                    .pattern("xx ")
+                    .define('x', Items.IRON_INGOT)
+                    .define('y', Items.GUNPOWDER)
+                    .define('i', Items.IRON_BLOCK)
+                    .define('r', Items.REDSTONE)
+                    .unlockedBy(getHasName(ModItems.Bazooka.get()), has(ModItems.Bazooka.get()))
+                    .save(recipeOutput);
+
         // porkchop block
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.PorkchopBlock.get())
                 .pattern("###")
@@ -87,6 +98,36 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         // porkchopyonite from cooked porkchop
         ironFurnaceSmelting(recipeOutput, RecipeCategory.FOOD, Items.COOKED_PORKCHOP,
                 new ItemStack(ModItems.Porkchopyonite.get(), 1), 6f, "porkchopyonite");
+
+        // Porkchop upgrade craft
+        ShapedRecipeBuilder.shaped(RecipeCategory.MISC, ModItems.PorkchopUpgrade.get())
+                .pattern("grb")
+                .pattern("cpb")
+                .pattern("cpb")
+                .define('g', Items.GUNPOWDER)
+                .define('r', Items.ROTTEN_FLESH)
+                .define('b', Items.MUTTON)
+                .define('p', ModItems.Porkchopyonite.get())
+                .define('c', Items.COOKED_PORKCHOP)
+                .unlockedBy(getHasName(ModItems.Porkchopyonite.get()), has(ModItems.Porkchopyonite.get()))
+                .unlockedBy(getHasName(Items.COOKED_PORKCHOP), has(Items.COOKED_PORKCHOP))
+                .save(recipeOutput);
+
+        // porkchop tools
+        smithingRecipe(recipeOutput, ModItems.PorkchopUpgrade.get(), Items.IRON_SWORD, ModItems.Porkchopyonite.get(), RecipeCategory.COMBAT,
+                ModItems.PorkchopyoniteSword.get());
+
+        smithingRecipe(recipeOutput, ModItems.PorkchopUpgrade.get(), Items.IRON_PICKAXE, ModItems.Porkchopyonite.get(), RecipeCategory.TOOLS,
+                ModItems.PorkchopyonitePickaxe.get());
+
+        smithingRecipe(recipeOutput, ModItems.PorkchopUpgrade.get(), Items.IRON_AXE, ModItems.Porkchopyonite.get(), RecipeCategory.TOOLS,
+                ModItems.PorkchopyoniteAxe.get());
+
+        smithingRecipe(recipeOutput, ModItems.PorkchopUpgrade.get(), Items.IRON_SHOVEL, ModItems.Porkchopyonite.get(), RecipeCategory.TOOLS,
+                ModItems.PorkchopyoniteShovel.get());
+
+        smithingRecipe(recipeOutput, ModItems.PorkchopUpgrade.get(), Items.IRON_HOE, ModItems.Porkchopyonite.get(), RecipeCategory.TOOLS,
+                ModItems.PorkchopyoniteHoe.get());
     }
 
     protected static void smelting(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,
@@ -117,5 +158,12 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .group(pGroup)
                 .unlockedBy(getHasName(pInput), has(pInput))
                 .save(pRecipeOutput, CoolModRemastered.MOD_ID + ":" + getItemName(pOutput.getItem()) + "_from_iron_furnace");
+    }
+
+    protected static void smithingRecipe(RecipeOutput pRecipeOutput, Item pUpgrade, Item pBase, Item pAddition, RecipeCategory pCategory,
+                                         Item pResult) {
+        SmithingTransformRecipeBuilder.smithing(Ingredient.of(pUpgrade), Ingredient.of(pBase), Ingredient.of(pAddition),
+                pCategory, pResult).unlocks(getHasName(pBase), has(pBase))
+                .save(pRecipeOutput, CoolModRemastered.MOD_ID + ":" + getItemName(pResult) + "_from_smithing");
     }
 }

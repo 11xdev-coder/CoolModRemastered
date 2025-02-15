@@ -6,6 +6,8 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.qsef.coolmodremastered.CoolModRemastered;
+import net.qsef.coolmodremastered.item.custom.Bazooka;
+import net.qsef.coolmodremastered.item.custom.EmeraldStaff;
 import net.qsef.coolmodremastered.item.custom.FuelItem;
 import net.qsef.coolmodremastered.item.custom.PigRelic;
 
@@ -28,7 +30,10 @@ public class ModItems {
             () -> new FuelItem(new Item.Properties().food(ModFoods.ROASTED_PORKCHOP), 300));
 
     public static final RegistryObject<Item> EmeraldStaff = ITEMS.register("emerald_staff",
-            () -> new Item(new Item.Properties()));
+            () -> new EmeraldStaff(new Item.Properties()));
+
+    public static final RegistryObject<Item> Bazooka = ITEMS.register("bazooka",
+            () -> new Bazooka(new Item.Properties()));
 
     // Porkchopyonite tools
     public static final RegistryObject<Item> PorkchopyoniteSword = ITEMS.register("porkchopyonite_sword",
@@ -46,6 +51,10 @@ public class ModItems {
     public static final RegistryObject<Item> PorkchopyoniteHoe = ITEMS.register("porkchopyonite_hoe",
             () -> new HoeItem(ModToolTiers.PORKCHOPYONITE_TIER, -2,-1, new Item.Properties()));
     // -------------
+
+    // Porkchop upgrade
+    public static final RegistryObject<Item> PorkchopUpgrade = ITEMS.register("porkchop_upgrade",
+            () -> new Item(new Item.Properties()));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);
