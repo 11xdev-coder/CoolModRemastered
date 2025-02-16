@@ -8,6 +8,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.qsef.coolmodremastered.entity.ModEntities;
 import net.qsef.coolmodremastered.entity.client.RocketRenderer;
+import net.qsef.coolmodremastered.network.ModNetwork;
 import net.qsef.coolmodremastered.screen.IronFurnaceScreen;
 import net.qsef.coolmodremastered.screen.ModMenuTypes;
 

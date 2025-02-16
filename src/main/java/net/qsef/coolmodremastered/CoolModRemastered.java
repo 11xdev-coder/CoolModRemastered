@@ -18,6 +18,7 @@ import net.qsef.coolmodremastered.block.entity.ModBlockEntities;
 import net.qsef.coolmodremastered.entity.ModEntities;
 import net.qsef.coolmodremastered.item.ModCreativeModeTabs;
 import net.qsef.coolmodremastered.item.ModItems;
+import net.qsef.coolmodremastered.network.ModNetwork;
 import net.qsef.coolmodremastered.recipe.ModRecipes;
 import net.qsef.coolmodremastered.screen.IronFurnaceScreen;
 import net.qsef.coolmodremastered.screen.ModMenuTypes;
@@ -57,7 +58,7 @@ public class CoolModRemastered {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
-
+        ModNetwork.registerPackets();
     }
 
     private void addCreative(BuildCreativeModeTabContentsEvent event) {
