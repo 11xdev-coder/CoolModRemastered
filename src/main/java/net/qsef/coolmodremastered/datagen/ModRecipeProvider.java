@@ -2,6 +2,7 @@ package net.qsef.coolmodremastered.datagen;
 
 import net.minecraft.data.PackOutput;
 import net.minecraft.data.recipes.*;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
@@ -14,13 +15,16 @@ import net.qsef.coolmodremastered.block.ModBlocks;
 import net.qsef.coolmodremastered.datagen.recipebuilder.IronFurnaceRecipeBuilder;
 import net.qsef.coolmodremastered.item.ModItems;
 import net.qsef.coolmodremastered.recipe.IronFurnaceRecipe;
+import net.qsef.coolmodremastered.util.ModTags;
 
+import javax.annotation.Nullable;
 import java.util.Iterator;
 import java.util.List;
 import java.util.function.Consumer;
 
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
     public static final List<ItemLike> COOKED_PORKCHOP = List.of(Items.COOKED_PORKCHOP);
+    public static final List<ItemLike> IRON_INGOT = List.of(Items.IRON_INGOT);
 
     public ModRecipeProvider(PackOutput pOutput) {
         super(pOutput);
@@ -34,6 +38,10 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         smoking(recipeOutput, COOKED_PORKCHOP, RecipeCategory.FOOD,
                 ModItems.RoastedPorkchop.get(), 0F, 50, "roasted_porkchop");
 
+        // blasting: steel ingot
+        blasting(recipeOutput, IRON_INGOT, RecipeCategory.MISC, ModItems.SteelIngot.get(), 1f, 300, "steel_ingot", ModTags.Items.IRON_INGOT_TAG);
+
+        // bazooka
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.Bazooka.get())
                     .pattern("xx ")
                     .pattern("yir")
@@ -135,20 +143,49 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         cooking(pRecipeOutput, RecipeSerializer.SMELTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTIme, pGroup, "_from_smelting");
     }
 
-    protected static void blasting(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
+    protected static void smelting(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,
+                                   ItemLike pResult, float pExperience, int pCookingTIme, String pGroup, TagKey<Item> additionalUnlockTag) {
+        cooking(pRecipeOutput, RecipeSerializer.SMELTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTIme, pGroup, "_from_smelting", additionalUnlockTag);
+    }
+
+    protected static void blasting(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,
+                                   ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
         cooking(pRecipeOutput, RecipeSerializer.BLASTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_blasting");
     }
 
-    protected static void smoking(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
+    protected static void blasting(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,
+                                   ItemLike pResult, float pExperience, int pCookingTime, String pGroup, TagKey<Item> additionalUnlockTag) {
+        cooking(pRecipeOutput, RecipeSerializer.BLASTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_blasting", additionalUnlockTag);
+    }
+
+    protected static void smoking(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,
+                                  ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
         cooking(pRecipeOutput, RecipeSerializer.SMOKING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_smoking");
     }
 
-    protected static void cooking(RecipeOutput pRecipeOutput, RecipeSerializer<? extends AbstractCookingRecipe> pCookingSerializer, List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime, String pGroup, String pRecipeName) {
+    protected static void smoking(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,
+                                  ItemLike pResult, float pExperience, int pCookingTime, String pGroup, TagKey<Item> additionalUnlockTag) {
+        cooking(pRecipeOutput, RecipeSerializer.SMOKING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_smoking", additionalUnlockTag);
+    }
+
+    protected static void cooking(RecipeOutput pRecipeOutput, RecipeSerializer<? extends AbstractCookingRecipe> pCookingSerializer,
+                                  List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime,
+                                  String pGroup, String pRecipeName) {
+        cooking(pRecipeOutput, pCookingSerializer, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, pRecipeName, null);
+    }
+
+    protected static void cooking(RecipeOutput pRecipeOutput, RecipeSerializer<? extends AbstractCookingRecipe> pCookingSerializer,
+                                  List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime,
+                                  String pGroup, String pRecipeName, @Nullable TagKey<Item> additionalUnlockTag) {
         for (ItemLike itemlike : pIngredients) {
-            SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), pCategory, pResult,
+            SimpleCookingRecipeBuilder builder = SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), pCategory, pResult,
                             pExperience, pCookingTime, pCookingSerializer)
-                    .group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike))
-                    .save(pRecipeOutput, CoolModRemastered.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
+                    .group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike));
+
+            if (additionalUnlockTag != null) {
+                builder.unlockedBy("has_" + additionalUnlockTag.location().getPath(), has(additionalUnlockTag));
+            }
+            builder.save(pRecipeOutput, CoolModRemastered.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
         }
     }
 

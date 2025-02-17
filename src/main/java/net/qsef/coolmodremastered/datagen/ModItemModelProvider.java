@@ -20,6 +20,7 @@ public class ModItemModelProvider extends ItemModelProvider {
 
     @Override
     protected void registerModels() {
+        simpleItem(ModItems.SteelIngot);
         simpleItem(ModItems.PigRelic);
         simpleItem(ModItems.PigSoul);
         simpleItem(ModItems.PorkBurger);

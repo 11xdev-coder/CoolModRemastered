@@ -1,5 +1,7 @@
 package net.qsef.coolmodremastered.item;
 
+import net.minecraft.core.Registry;
+import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -31,6 +33,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> EmeraldStaff = ITEMS.register("emerald_staff",
             () -> new EmeraldStaff(new Item.Properties()));
+
+    public static final RegistryObject<Item> SteelIngot = ITEMS.register("steel_ingot",
+            () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> Bazooka = ITEMS.register("bazooka",
             () -> new Bazooka(new Item.Properties()));

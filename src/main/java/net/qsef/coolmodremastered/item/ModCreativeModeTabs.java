@@ -21,6 +21,7 @@ public class ModCreativeModeTabs {
                     .title(Component.translatable("creativetab.cool_tab")) // title, later translated in en_us.json
                     .displayItems((itemDisplayParameters, output) -> {
                         // all new items should be listed in here
+                        output.accept(ModItems.SteelIngot.get());
                         output.accept(ModItems.Bazooka.get());
                         output.accept(ModItems.Porkchopyonite.get());
                         output.accept(ModItems.PigRelic.get());

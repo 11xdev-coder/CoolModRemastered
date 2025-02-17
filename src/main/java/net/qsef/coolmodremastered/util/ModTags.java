@@ -19,7 +19,7 @@ public class ModTags {
     }
 
     public static class Items {
-
+        public static final TagKey<Item> IRON_INGOT_TAG = tag("iron_ingot");
 
         public static TagKey<Item> tag(String name) {
             return ItemTags.create(new ResourceLocation(CoolModRemastered.MOD_ID, name));
