@@ -12,6 +12,7 @@ import net.minecraft.world.level.block.Blocks;
 import net.minecraftforge.common.crafting.conditions.IConditionBuilder;
 import net.qsef.coolmodremastered.CoolModRemastered;
 import net.qsef.coolmodremastered.block.ModBlocks;
+import net.qsef.coolmodremastered.datagen.recipebuilder.IndustrialFurnaceRecipeBuilder;
 import net.qsef.coolmodremastered.datagen.recipebuilder.IronFurnaceRecipeBuilder;
 import net.qsef.coolmodremastered.item.ModItems;
 import net.qsef.coolmodremastered.recipe.IronFurnaceRecipe;
@@ -39,7 +40,8 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 ModItems.RoastedPorkchop.get(), 0F, 50, "roasted_porkchop");
 
         // blasting: steel ingot
-        blasting(recipeOutput, IRON_INGOT, RecipeCategory.MISC, ModItems.SteelIngot.get(), 1f, 300, "steel_ingot", ModTags.Items.IRON_INGOT_TAG);
+        blasting(recipeOutput, IRON_INGOT, RecipeCategory.MISC, ModItems.SteelIngot.get(), 1f, 300, "steel_ingot");
+        industrialFurnace(recipeOutput, RecipeCategory.MISC, Items.IRON_INGOT, new ItemStack(ModItems.SteelIngot.get(), 1), 1f, "steel_ingot");
 
         // bazooka
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.Bazooka.get())
@@ -143,19 +145,9 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         cooking(pRecipeOutput, RecipeSerializer.SMELTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTIme, pGroup, "_from_smelting");
     }
 
-    protected static void smelting(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,
-                                   ItemLike pResult, float pExperience, int pCookingTIme, String pGroup, TagKey<Item> additionalUnlockTag) {
-        cooking(pRecipeOutput, RecipeSerializer.SMELTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTIme, pGroup, "_from_smelting", additionalUnlockTag);
-    }
-
     protected static void blasting(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,
                                    ItemLike pResult, float pExperience, int pCookingTime, String pGroup) {
         cooking(pRecipeOutput, RecipeSerializer.BLASTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_blasting");
-    }
-
-    protected static void blasting(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,
-                                   ItemLike pResult, float pExperience, int pCookingTime, String pGroup, TagKey<Item> additionalUnlockTag) {
-        cooking(pRecipeOutput, RecipeSerializer.BLASTING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_blasting", additionalUnlockTag);
     }
 
     protected static void smoking(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,
@@ -163,28 +155,13 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         cooking(pRecipeOutput, RecipeSerializer.SMOKING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_smoking");
     }
 
-    protected static void smoking(RecipeOutput pRecipeOutput, List<ItemLike> pIngredients, RecipeCategory pCategory,
-                                  ItemLike pResult, float pExperience, int pCookingTime, String pGroup, TagKey<Item> additionalUnlockTag) {
-        cooking(pRecipeOutput, RecipeSerializer.SMOKING_RECIPE, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, "_from_smoking", additionalUnlockTag);
-    }
-
     protected static void cooking(RecipeOutput pRecipeOutput, RecipeSerializer<? extends AbstractCookingRecipe> pCookingSerializer,
                                   List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime,
                                   String pGroup, String pRecipeName) {
-        cooking(pRecipeOutput, pCookingSerializer, pIngredients, pCategory, pResult, pExperience, pCookingTime, pGroup, pRecipeName, null);
-    }
-
-    protected static void cooking(RecipeOutput pRecipeOutput, RecipeSerializer<? extends AbstractCookingRecipe> pCookingSerializer,
-                                  List<ItemLike> pIngredients, RecipeCategory pCategory, ItemLike pResult, float pExperience, int pCookingTime,
-                                  String pGroup, String pRecipeName, @Nullable TagKey<Item> additionalUnlockTag) {
         for (ItemLike itemlike : pIngredients) {
             SimpleCookingRecipeBuilder builder = SimpleCookingRecipeBuilder.generic(Ingredient.of(itemlike), pCategory, pResult,
                             pExperience, pCookingTime, pCookingSerializer)
                     .group(pGroup).unlockedBy(getHasName(itemlike), has(itemlike));
-
-            if (additionalUnlockTag != null) {
-                builder.unlockedBy("has_" + additionalUnlockTag.location().getPath(), has(additionalUnlockTag));
-            }
             builder.save(pRecipeOutput, CoolModRemastered.MOD_ID + ":" + getItemName(pResult) + pRecipeName + "_" + getItemName(itemlike));
         }
     }
@@ -195,6 +172,14 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                 .group(pGroup)
                 .unlockedBy(getHasName(pInput), has(pInput))
                 .save(pRecipeOutput, CoolModRemastered.MOD_ID + ":" + getItemName(pOutput.getItem()) + "_from_iron_furnace");
+    }
+
+    protected static void industrialFurnace(RecipeOutput pRecipeOutput, RecipeCategory pCategory, Item pInput,
+                                              ItemStack pOutput, float pExperience, String pGroup) {
+        IndustrialFurnaceRecipeBuilder.industrialFurnaceRecipe(pCategory, Ingredient.of(pInput), pOutput, pExperience)
+                .group(pGroup)
+                .unlockedBy(getHasName(pInput), has(pInput))
+                .save(pRecipeOutput, CoolModRemastered.MOD_ID + ":" + getItemName(pOutput.getItem()) + "_from_industrial");
     }
 
     protected static void smithingRecipe(RecipeOutput pRecipeOutput, Item pUpgrade, Item pBase, Item pAddition, RecipeCategory pCategory,

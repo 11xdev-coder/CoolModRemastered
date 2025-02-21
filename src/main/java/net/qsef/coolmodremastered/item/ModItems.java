@@ -8,10 +8,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.qsef.coolmodremastered.CoolModRemastered;
-import net.qsef.coolmodremastered.item.custom.Bazooka;
-import net.qsef.coolmodremastered.item.custom.EmeraldStaff;
-import net.qsef.coolmodremastered.item.custom.FuelItem;
-import net.qsef.coolmodremastered.item.custom.PigRelic;
+import net.qsef.coolmodremastered.item.custom.*;
 
 public class ModItems {
     public static final DeferredRegister<Item> ITEMS = DeferredRegister.create(ForgeRegistries.ITEMS, CoolModRemastered.MOD_ID);
@@ -36,6 +33,9 @@ public class ModItems {
 
     public static final RegistryObject<Item> SteelIngot = ITEMS.register("steel_ingot",
             () -> new Item(new Item.Properties()));
+
+    public static final RegistryObject<Item> Carbon = ITEMS.register("carbon",
+            () -> new IndustrialFuelItem(new Item.Properties(), 400));
 
     public static final RegistryObject<Item> Bazooka = ITEMS.register("bazooka",
             () -> new Bazooka(new Item.Properties()));

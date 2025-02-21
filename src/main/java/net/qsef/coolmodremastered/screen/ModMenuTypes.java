@@ -19,6 +19,9 @@ public class ModMenuTypes {
     public static final RegistryObject<MenuType<IronFurnaceMenu>> IronFurnaceMenu =
             MENUS.register("iron_furnace_menu", () -> IForgeMenuType.create(IronFurnaceMenu::new));
 
+    public static final RegistryObject<MenuType<IndustrialFurnaceMenu>> IndustrialFurnaceMenu =
+            MENUS.register("industrial_furnace_menu", () -> IForgeMenuType.create(IndustrialFurnaceMenu::new));
+
     public static void register(IEventBus eventBus) {
         MENUS.register(eventBus);
     }

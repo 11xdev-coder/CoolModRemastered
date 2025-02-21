@@ -18,6 +18,8 @@ public class ModRecipes {
     public static final RegistryObject<RecipeSerializer<IronFurnaceRecipe>> IronFurnaceSerializer =
             RECIPE_SERIALIZERS.register("iron_furnace_smelting", IronFurnaceRecipe.Serializer::new);
 
+    public static final RegistryObject<RecipeSerializer<IndustrialFurnaceRecipe>> IndustrialFurnaceSerializer =
+            RECIPE_SERIALIZERS.register("industrial", IndustrialFurnaceRecipe.Serializer::new);
 
     public static void register(IEventBus eventBus) {
         RECIPE_SERIALIZERS.register(eventBus);

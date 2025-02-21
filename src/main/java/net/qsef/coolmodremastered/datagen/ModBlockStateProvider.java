@@ -36,6 +36,10 @@ public class ModBlockStateProvider extends BlockStateProvider {
         horizontalDirectionalBlockWithItem("iron_furnace", "block/iron_furnace_side", "block/iron_furnace_front",
                 "block/iron_furnace_top", (IHorizontalDirectionalBlock) ModBlocks.IronFurnace.get());
 
+        horizontalDirectionalBlockWithItem("industrial_furnace", "block/industrial_furnace_side",
+                "block/industrial_furnace_front", "block/industrial_furnace_top",
+                (IHorizontalDirectionalBlock) ModBlocks.IndustrialFurnace.get());
+
         blockWithItem(ModBlocks.PorkchopBlock);
         stairsBlock((StairBlock) ModBlocks.PorkchopStairs.get(), blockTexture(ModBlocks.PorkchopBlock.get()));
         slabBlock((SlabBlock) ModBlocks.PorkchopSlab.get(), blockTexture(ModBlocks.PorkchopBlock.get()), blockTexture(ModBlocks.PorkchopBlock.get()));

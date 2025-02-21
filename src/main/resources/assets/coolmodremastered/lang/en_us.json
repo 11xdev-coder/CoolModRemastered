@@ -6,6 +6,7 @@
   "item.coolmodremastered.roasted_porkchop": "Roasted Porkchop",
   "item.coolmodremastered.emerald_staff": "Emerald Staff",
   "item.coolmodremastered.steel_ingot": "Steel Ingot",
+  "item.coolmodremastered.carbon": "Carbon",
   "item.coolmodremastered.bazooka": "Bazooka",
 
   "item.coolmodremastered.porkchopyonite_sword": "Porkchopyonite Sword",
@@ -28,6 +29,7 @@
   "block.coolmodremastered.porkchop_door": "Porkchop Door",
   "block.coolmodremastered.porkchop_trapdoor": "Porkchop Trapdoor",
   "block.coolmodremastered.iron_furnace": "Iron Furnace",
+  "block.coolmodremastered.industrial_furnace": "Industrial Furnace",
 
   "creativetab.cool_tab": "Cool Mod Remastered Tab"
 }

@@ -11,6 +11,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.qsef.coolmodremastered.CoolModRemastered;
+import net.qsef.coolmodremastered.block.custom.IndustrialFurnaceBlock;
 import net.qsef.coolmodremastered.block.custom.IronFurnaceBlock;
 import net.qsef.coolmodremastered.block.custom.PorkingStation;
 import net.qsef.coolmodremastered.item.ModItems;
@@ -66,6 +67,10 @@ public class ModBlocks {
             () -> new IronFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
                     .requiresCorrectToolForDrops()
                     .lightLevel((toint) -> 15)));
+
+    public static final RegistryObject<Block> IndustrialFurnace = registerBlock("industrial_furnace",
+            () -> new IndustrialFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
+                    .requiresCorrectToolForDrops()));
 
     // example ore block
 //    private static final RegistryObject<Block> ORE_BLOCK = registerBlock("ore_block",

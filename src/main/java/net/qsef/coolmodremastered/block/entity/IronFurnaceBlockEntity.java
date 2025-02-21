@@ -38,6 +38,7 @@ import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.items.wrapper.InvWrapper;
 import net.qsef.coolmodremastered.CoolModRemastered;
+import net.qsef.coolmodremastered.block.base.AbstractFurnaceBlockEntity;
 import net.qsef.coolmodremastered.block.base.IHorizontalDirectionalBlock;
 import net.qsef.coolmodremastered.recipe.IronFurnaceRecipe;
 import net.qsef.coolmodremastered.recipe.ModRecipes;
@@ -51,102 +52,34 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Random;
 
-public class IronFurnaceBlockEntity extends BlockEntity implements MenuProvider, Container, Nameable, RecipeCraftingHolder, StackedContentsCompatible {
+public class IronFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
     private static final int INPUT_SLOT = 0;
     private static final int OUTPUT_SLOT = 1;
-
-    private LazyOptional<?> itemHandler;
-
-    // container progress data
-    protected final ContainerData data;
-    private int progress = 0;
-    private int maxProgress = 100;
-
-    // container items
-    private NonNullList<ItemStack> items;
-    private Component name;
-    private final int CONTAINER_SIZE = 2;
-    private final RecipeManager.CachedCheck<Container, ? extends IronFurnaceRecipe> quickCheckIronFurnace;
-    private final RecipeManager.CachedCheck<Container, ? extends AbstractCookingRecipe> quickCheckSmelting;
+    private static final int CONTAINER_SIZE = 2;
 
     public IronFurnaceBlockEntity(BlockPos pPos, BlockState pBlockState) {
-        super(ModBlockEntities.IronFurnace_BE.get(), pPos, pBlockState);
-
-        this.items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
-        this.itemHandler = LazyOptional.of(this::createUnSidedHandler);
-        this.quickCheckIronFurnace = RecipeManager.createCheck(IronFurnaceRecipe.RECIPE_TYPE);
-        this.quickCheckSmelting = RecipeManager.createCheck(RecipeType.SMELTING);
-
-        this.data = new ContainerData() {
-            @Override
-            public int get(int i) {
-                return switch (i) {
-                    // sync progress
-                    case 0 -> IronFurnaceBlockEntity.this.progress;
-                    case 1 -> IronFurnaceBlockEntity.this.maxProgress;
-                    default -> 0;
-                };
-            }
-
-            @Override
-            public void set(int i, int i1) {
-                // sync these 2 integers
-                switch (i) {
-                    case 0 -> IronFurnaceBlockEntity.this.progress = i1;
-                    case 1 -> IronFurnaceBlockEntity.this.maxProgress = i1;
-                }
-            }
-
-            @Override
-            public int getCount() {
-                // count of syncs
-                return 2;
-            }
-        };
-    }
-
-    // lazy optionals are for checking capabilities
-    @Override
-    public @NotNull <T> LazyOptional<T> getCapability(@NotNull Capability<T> cap, @Nullable Direction side) {
-        return !this.remove && cap == ForgeCapabilities.ITEM_HANDLER ? itemHandler.cast() : super.getCapability(cap, side);
+        super(ModBlockEntities.IronFurnace_BE.get(), pPos, pBlockState, CONTAINER_SIZE, INPUT_SLOT, OUTPUT_SLOT, -1,
+                List.of(RecipeManager.createCheck(IronFurnaceRecipe.RECIPE_TYPE), RecipeManager.createCheck(RecipeType.SMELTING)));
     }
 
     @Override
-    public void invalidateCaps() {
-        super.invalidateCaps();
-        this.itemHandler.invalidate();
+    protected boolean usesFuel() {
+        return false;
     }
 
     @Override
-    public void reviveCaps() {
-        super.reviveCaps();
-        this.itemHandler = LazyOptional.of(this::createUnSidedHandler);
-    }
-
-    public void drops() {
-        if (this.level != null) {
-            Containers.dropContents(this.level, this.worldPosition, items); // drop content of inventory at block position
-        }
-    }
-
-    @Override
-    protected void saveAdditional(CompoundTag pTag) {
-        // save data when game is saved
-        pTag.putInt("iron_furnace.progress", progress);
+    protected void saveData(CompoundTag pTag) {
+        pTag.putInt("iron_furnace.cookTime", cookTime);
         ContainerHelper.saveAllItems(pTag, this.items);
 
         if(this.name != null) {
             pTag.putString("CustomName", Component.Serializer.toJson(this.name));
         }
-
-        super.saveAdditional(pTag);
     }
 
     @Override
-    public void load(CompoundTag pTag) {
-        super.load(pTag);
-
-        progress = pTag.getInt("iron_furnace.progress");
+    protected void loadData(CompoundTag pTag) {
+        cookTime = pTag.getInt("iron_furnace.cookTime");
 
         this.items = NonNullList.withSize(CONTAINER_SIZE, ItemStack.EMPTY);
         ContainerHelper.loadAllItems(pTag, this.items);
@@ -154,58 +87,6 @@ public class IronFurnaceBlockEntity extends BlockEntity implements MenuProvider,
         if(pTag.contains("CustomName", 8)) {
             this.name = Component.Serializer.fromJson(pTag.getString("CustomName"));
         }
-    }
-
-    public void tick(Level pLevel, BlockPos pPos, BlockState pState) {
-        // crafting logic
-        if(hasInputItem() && hasRecipe(pLevel)) {
-            increaseCraftingProgress();
-            setChanged(pLevel, pPos, pState);
-
-            if(hasFinished()) {
-                spawnXp(pLevel, pPos);
-                craftItem(pLevel);
-                resetProgress();
-            }
-        } else {
-            resetProgress();
-        }
-    }
-
-    private boolean hasInputItem() {
-        return this.items.get(INPUT_SLOT) != ItemStack.EMPTY;
-    }
-
-    private boolean hasRecipe(Level pLevel) {
-        RecipeHolder recipeHolder = getCurrentRecipe(pLevel);
-        if(recipeHolder == null) return false;
-
-        ItemStack result = recipeHolder.value().getResultItem(null);
-        return canInsertAmountIntoOutputSlot(result.getCount()) && canInsertItemIntoOutputSlot(result.getItem());
-    }
-
-    private void craftItem(Level pLevel) {
-        RecipeHolder recipeHolder = getCurrentRecipe(pLevel);
-
-        // remove 1 item from INPUT_SLOT
-        this.items.get(INPUT_SLOT).shrink(1);
-
-        // get existing count in OUTPUT_SLOT
-        int existingCount = this.items.get(OUTPUT_SLOT).getCount();
-
-        // get result item
-        ItemStack result = recipeHolder.value().getResultItem(null);
-
-        ItemStack newResultItemStack = new ItemStack(result.getItem(), existingCount + result.getCount());
-
-        this.items.set(OUTPUT_SLOT, newResultItemStack);
-    }
-
-    private RecipeHolder getCurrentRecipe(Level pLevel) {
-        // if no Iron Furnace recipes, return normal smelting recipe
-        RecipeHolder ironFurnaceRecipe = this.quickCheckIronFurnace.getRecipeFor(this, pLevel).orElse(null);
-        if(ironFurnaceRecipe == null) return this.quickCheckSmelting.getRecipeFor(this, pLevel).orElse(null);
-        return ironFurnaceRecipe;
     }
 
     private void spawnXp(Level pLevel, BlockPos pPos) {
@@ -228,138 +109,13 @@ public class IronFurnaceBlockEntity extends BlockEntity implements MenuProvider,
         }
     }
 
-    private boolean canInsertItemIntoOutputSlot(Item item) {
-        ItemStack stack = this.items.get(OUTPUT_SLOT);
-        return stack.isEmpty() || stack.is(item);
-    }
-
-    private boolean canInsertAmountIntoOutputSlot(int amount) {
-        ItemStack stack = this.items.get(OUTPUT_SLOT);
-        return stack.getCount() + amount <= stack.getMaxStackSize();
-    }
-
-    private void increaseCraftingProgress() {
-        progress++;
-    }
-
-    private void resetProgress() {
-        progress = 0;
-    }
-
-    private boolean hasFinished() {
-        return progress >= maxProgress;
-    }
-
-    public void setCustomName(Component pName) {
-        this.name = pName;
-    }
-
     @Override
-    public AbstractContainerMenu createMenu(int i, Inventory inventory, Player player) {
-        return new IronFurnaceMenu(i, inventory, this, this.data);
-    }
-
-    public NonNullList<ItemStack> getItems() {
-        return this.items;
-    }
-
-    @Override
-    public Component getName() {
-        return this.name != null ? this.name : this.getDefaultName();
-    }
-
-    @Override
-    public Component getDisplayName() {
-        return this.getName();
-    }
-
-    @Nullable
-    @Override
-    public Component getCustomName() {
-        return this.name;
-    }
-
     protected Component getDefaultName() {
         return Component.translatable("block.coolmodremastered.iron_furnace");
     }
 
     @Override
-    public int getContainerSize() {
-        return 2;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return this.getItems().stream().allMatch(ItemStack::isEmpty);
-    }
-
-    @Override
-    public ItemStack getItem(int i) {
-        return this.getItems().get(i);
-    }
-
-    @Override
-    public ItemStack removeItem(int pIndex, int pCount) {
-        ItemStack stack = ContainerHelper.removeItem(this.getItems(), pIndex, pCount);
-        if(!stack.isEmpty()) this.setChanged();
-        return stack;
-    }
-
-    @Override
-    public ItemStack removeItemNoUpdate(int i) {
-        ItemStack stack = ContainerHelper.takeItem(this.getItems(), i);
-        return stack;
-    }
-
-    @Override
-    public void setItem(int i, ItemStack itemStack) {
-        this.getItems().set(i, itemStack);
-        if(itemStack.getCount() > this.getMaxStackSize()) {
-            itemStack.setCount(this.getMaxStackSize());
-        }
-
-        this.setChanged();
-    }
-
-    @Override
-    public boolean stillValid(Player player) {
-        return Container.stillValidBlockEntity(this, player);
-    }
-
-    @Override
-    public void clearContent() {
-        this.getItems().clear();
-    }
-
-    protected IItemHandler createUnSidedHandler() {
-        return new InvWrapper(this);
-    }
-
-    @Override
-    public void setRecipeUsed(@Nullable RecipeHolder<?> recipeHolder) {
-
-    }
-
-    @Nullable
-    @Override
-    public RecipeHolder<?> getRecipeUsed() {
-        return null;
-    }
-
-    @Override
-    public void awardUsedRecipes(Player pPlayer, List<ItemStack> pItems) {
-        RecipeCraftingHolder.super.awardUsedRecipes(pPlayer, pItems);
-    }
-
-    @Override
-    public boolean setRecipeUsed(Level pLevel, ServerPlayer pPlayers, RecipeHolder<?> pRecipe) {
-        return RecipeCraftingHolder.super.setRecipeUsed(pLevel, pPlayers, pRecipe);
-    }
-
-    @Override
-    public void fillStackedContents(StackedContents stackedContents) {
-        for (ItemStack itemstack : this.items) {
-            stackedContents.accountStack(itemstack);
-        }
+    protected AbstractContainerMenu getContainerMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
+        return new IronFurnaceMenu(pContainerId, pPlayerInventory, this, this.data);
     }
 }
