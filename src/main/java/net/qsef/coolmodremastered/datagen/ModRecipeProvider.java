@@ -26,6 +26,8 @@ import java.util.function.Consumer;
 public class ModRecipeProvider extends RecipeProvider implements IConditionBuilder {
     public static final List<ItemLike> COOKED_PORKCHOP = List.of(Items.COOKED_PORKCHOP);
     public static final List<ItemLike> IRON_INGOT = List.of(Items.IRON_INGOT);
+    public static final List<ItemLike> COMPRESSED_CHARCOAL = List.of(ModItems.CompressedCharcoal.get());
+    public static final List<ItemLike> COAL_BLOCK = List.of(Items.COAL_BLOCK);
 
     public ModRecipeProvider(PackOutput pOutput) {
         super(pOutput);
@@ -42,6 +44,25 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         // blasting: steel ingot
         blasting(recipeOutput, IRON_INGOT, RecipeCategory.MISC, ModItems.SteelIngot.get(), 1f, 300, "steel_ingot");
         industrialFurnace(recipeOutput, RecipeCategory.MISC, Items.IRON_INGOT, new ItemStack(ModItems.SteelIngot.get(), 1), 1f, "steel_ingot");
+        blasting(recipeOutput, COMPRESSED_CHARCOAL, RecipeCategory.MISC, ModItems.Carbon.get(), 1f, 100, "carbon");
+        blasting(recipeOutput, COAL_BLOCK, RecipeCategory.MISC, ModItems.Carbon.get(), 1f, 150, "carbon");
+
+        // compressed charcoal
+        ShapelessRecipeBuilder.shapeless(RecipeCategory.MISC, ModItems.CompressedCharcoal.get(), 1)
+                .unlockedBy(getHasName(ModItems.CompressedCharcoal.get()), has(ModItems.CompressedCharcoal.get()))
+                .requires(Items.CHARCOAL, 4).save(recipeOutput);
+
+        // industrial furnace
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModBlocks.IndustrialFurnace.get())
+                .pattern("iii")
+                .pattern("blb")
+                .pattern("ggg")
+                .define('b', Items.BLAST_FURNACE)
+                .define('l', Items.LAVA_BUCKET)
+                .define('i', Items.IRON_BLOCK)
+                .define('g', Items.IRON_INGOT)
+                .unlockedBy(getHasName(ModBlocks.IndustrialFurnace.get()), has(ModBlocks.IndustrialFurnace.get()))
+                .save(recipeOutput);
 
         // bazooka
         ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.Bazooka.get())
@@ -179,7 +200,7 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
         IndustrialFurnaceRecipeBuilder.industrialFurnaceRecipe(pCategory, Ingredient.of(pInput), pOutput, pExperience)
                 .group(pGroup)
                 .unlockedBy(getHasName(pInput), has(pInput))
-                .save(pRecipeOutput, CoolModRemastered.MOD_ID + ":" + getItemName(pOutput.getItem()) + "_from_industrial");
+                .save(pRecipeOutput, CoolModRemastered.MOD_ID + ":" + getItemName(pOutput.getItem()) + "_from_" + getItemName(pInput)  + "_industrial");
     }
 
     protected static void smithingRecipe(RecipeOutput pRecipeOutput, Item pUpgrade, Item pBase, Item pAddition, RecipeCategory pCategory,

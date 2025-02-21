@@ -23,6 +23,7 @@ public class ModCreativeModeTabs {
                         // all new items should be listed in here
                         output.accept(ModItems.SteelIngot.get());
                         output.accept(ModItems.Carbon.get());
+                        output.accept(ModItems.CompressedCharcoal.get());
                         output.accept(ModItems.Bazooka.get());
                         output.accept(ModBlocks.IndustrialFurnace.get());
                         output.accept(ModItems.Porkchopyonite.get());

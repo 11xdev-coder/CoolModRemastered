@@ -37,6 +37,9 @@ public class ModItems {
     public static final RegistryObject<Item> Carbon = ITEMS.register("carbon",
             () -> new IndustrialFuelItem(new Item.Properties(), 400));
 
+    public static final RegistryObject<Item> CompressedCharcoal = ITEMS.register("compressed_charcoal",
+            () -> new IndustrialFuelItem(new Item.Properties(), 400));
+
     public static final RegistryObject<Item> Bazooka = ITEMS.register("bazooka",
             () -> new Bazooka(new Item.Properties()));
 

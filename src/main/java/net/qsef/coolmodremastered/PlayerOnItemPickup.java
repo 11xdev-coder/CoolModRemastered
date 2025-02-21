@@ -8,6 +8,7 @@ import net.minecraft.world.item.Items;
 import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.qsef.coolmodremastered.item.ModItems;
 
 import java.util.*;
 
@@ -16,6 +17,10 @@ public class PlayerOnItemPickup {
 
     static {
         ITEM_TO_ACHIEVEMENT.put(Items.IRON_INGOT, new ResourceLocation("coolmodremastered", "steel_ingot_from_blasting_iron_ingot"));
+        ITEM_TO_ACHIEVEMENT.put(ModItems.CompressedCharcoal.get(), new ResourceLocation("coolmodremastered", "carbon_from_blasting_compressed_charcoal"));
+        ITEM_TO_ACHIEVEMENT.put(Items.COAL_BLOCK, new ResourceLocation("coolmodremastered", "carbon_from_blasting_coal_block"));
+        ITEM_TO_ACHIEVEMENT.put(Items.CHARCOAL, new ResourceLocation("coolmodremastered", "compressed_charcoal"));
+        ITEM_TO_ACHIEVEMENT.put(Items.LAVA_BUCKET, new ResourceLocation("coolmodremastered", "industrial_furnace"));
     }
 
     private static Optional<ResourceLocation> getAchievementForItem(Item item) {

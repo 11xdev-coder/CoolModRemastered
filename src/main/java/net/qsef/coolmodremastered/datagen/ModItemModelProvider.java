@@ -22,6 +22,7 @@ public class ModItemModelProvider extends ItemModelProvider {
     protected void registerModels() {
         simpleItem(ModItems.SteelIngot);
         simpleItem(ModItems.Carbon);
+        simpleItem(ModItems.CompressedCharcoal);
         simpleItem(ModItems.PigRelic);
         simpleItem(ModItems.PigSoul);
         simpleItem(ModItems.PorkBurger);
