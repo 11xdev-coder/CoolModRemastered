@@ -76,6 +76,38 @@ public class ModRecipeProvider extends RecipeProvider implements IConditionBuild
                     .unlockedBy(getHasName(ModItems.Bazooka.get()), has(ModItems.Bazooka.get()))
                     .save(recipeOutput);
 
+        // steel armor
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SteelHelmet.get())
+                .pattern("xxx")
+                .pattern("x x")
+                .pattern("   ")
+                .define('x', ModItems.SteelIngot.get())
+                .unlockedBy(getHasName(ModItems.SteelHelmet.get()), has(ModItems.SteelHelmet.get()))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SteelChestplate.get())
+                .pattern("x x")
+                .pattern("xxx")
+                .pattern("xxx")
+                .define('x', ModItems.SteelIngot.get())
+                .unlockedBy(getHasName(ModItems.SteelChestplate.get()), has(ModItems.SteelChestplate.get()))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SteelLeggings.get())
+                .pattern("xxx")
+                .pattern("x x")
+                .pattern("x x")
+                .define('x', ModItems.SteelIngot.get())
+                .unlockedBy(getHasName(ModItems.SteelLeggings.get()), has(ModItems.SteelLeggings.get()))
+                .save(recipeOutput);
+        ShapedRecipeBuilder.shaped(RecipeCategory.COMBAT, ModItems.SteelBoots.get())
+                .pattern("x x")
+                .pattern("x x")
+                .pattern("   ")
+                .define('x', ModItems.SteelIngot.get())
+                .unlockedBy(getHasName(ModItems.SteelBoots.get()), has(ModItems.SteelBoots.get()))
+                .save(recipeOutput);
+
+
+
         // porkchop block
         ShapedRecipeBuilder.shaped(RecipeCategory.DECORATIONS, ModBlocks.PorkchopBlock.get())
                 .pattern("###")

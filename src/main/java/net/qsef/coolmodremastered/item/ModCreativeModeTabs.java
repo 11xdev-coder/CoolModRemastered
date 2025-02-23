@@ -17,7 +17,7 @@ public class ModCreativeModeTabs {
 
     // create a new tab using CreativeModeTab.builder()
     public static final RegistryObject<CreativeModeTab> COOL_TAB = CREATIVE_MODE_TABS.register("cool_tab",
-            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.Porkchopyonite.get())) // new itemstack of our item, get() is used for modded items
+            () -> CreativeModeTab.builder().icon(() -> new ItemStack(ModItems.Bazooka.get())) // new itemstack of our item, get() is used for modded items
                     .title(Component.translatable("creativetab.cool_tab")) // title, later translated in en_us.json
                     .displayItems((itemDisplayParameters, output) -> {
                         // all new items should be listed in here
@@ -26,6 +26,12 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.CompressedCharcoal.get());
                         output.accept(ModItems.Bazooka.get());
                         output.accept(ModBlocks.IndustrialFurnace.get());
+
+                        output.accept(ModItems.SteelHelmet.get());
+                        output.accept(ModItems.SteelChestplate.get());
+                        output.accept(ModItems.SteelLeggings.get());
+                        output.accept(ModItems.SteelBoots.get());
+
                         output.accept(ModItems.Porkchopyonite.get());
                         output.accept(ModItems.PigRelic.get());
                         output.accept(ModItems.PigSoul.get());

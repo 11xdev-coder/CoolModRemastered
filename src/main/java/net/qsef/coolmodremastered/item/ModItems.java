@@ -1,7 +1,5 @@
 package net.qsef.coolmodremastered.item;
 
-import net.minecraft.core.Registry;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.*;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
@@ -42,6 +40,16 @@ public class ModItems {
 
     public static final RegistryObject<Item> Bazooka = ITEMS.register("bazooka",
             () -> new Bazooka(new Item.Properties()));
+
+    // steel armor
+    public static final RegistryObject<Item> SteelHelmet = ITEMS.register("steel_helmet",
+            () -> new SteelArmorItem(ModArmorMaterials.STEEL, ArmorItem.Type.HELMET, new Item.Properties()));
+    public static final RegistryObject<Item> SteelChestplate = ITEMS.register("steel_chestplate",
+            () -> new SteelArmorItem(ModArmorMaterials.STEEL, ArmorItem.Type.CHESTPLATE, new Item.Properties()));
+    public static final RegistryObject<Item> SteelLeggings = ITEMS.register("steel_leggings",
+            () -> new SteelArmorItem(ModArmorMaterials.STEEL, ArmorItem.Type.LEGGINGS, new Item.Properties()));
+    public static final RegistryObject<Item> SteelBoots = ITEMS.register("steel_boots",
+            () -> new SteelArmorItem(ModArmorMaterials.STEEL, ArmorItem.Type.BOOTS, new Item.Properties()));
 
     // Porkchopyonite tools
     public static final RegistryObject<Item> PorkchopyoniteSword = ITEMS.register("porkchopyonite_sword",

@@ -10,6 +10,13 @@
   "item.coolmodremastered.compressed_charcoal": "Compressed Charcoal",
   "item.coolmodremastered.bazooka": "Bazooka",
 
+  "item.coolmodremastered.steel_helmet": "Steel Helmet",
+  "item.coolmodremastered.steel_chestplate": "Steel Chestplate",
+  "item.coolmodremastered.steel_leggings": "Steel Leggings",
+  "item.coolmodremastered.steel_boots": "Steel Boots",
+  "tooltip.coolmodremastered.fire_resistance": "+%s Fire Resistance",
+  "tooltip.coolmodremastered.blast_resistance": "+%s Blast Resistance",
+
   "item.coolmodremastered.porkchopyonite_sword": "Porkchopyonite Sword",
   "item.coolmodremastered.porkchopyonite_pickaxe": "Porkchopyonite Pickaxe",
   "item.coolmodremastered.porkchopyonite_axe": "Porkchopyonite Axe",
