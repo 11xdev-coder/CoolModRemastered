@@ -100,6 +100,9 @@ public abstract class AbstractFurnaceBlockEntity extends BlockEntity implements 
     protected abstract Component getDefaultName();
     protected abstract AbstractContainerMenu getContainerMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer);
 
+    protected abstract int getBurnTimeForSpecificItem(ItemStack stack);
+    protected abstract boolean isFuelItemValidForFuelSlot(ItemStack stack);
+
     protected IItemHandler createUnSidedHandler() {
         return new InvWrapper(this);
     }
@@ -315,30 +318,27 @@ public abstract class AbstractFurnaceBlockEntity extends BlockEntity implements 
 
             if (burnTime <= 0 && hasInputItem() && canCraft(pLevel)) {
                 ItemStack fuelItem = items.get(fuelSlot);
-                int calculatedBurnTime = getFuelBurnTime(fuelItem);
+                // ensure valid fuel
+                if (!fuelItem.isEmpty() && isFuelItemValidForFuelSlot(fuelItem)) {
+                    int calculatedBurnTime = getFuelBurnTime(fuelItem);
 
-                if (calculatedBurnTime > 0) {
-                    burnTime = calculatedBurnTime;
-                    maxBurnTime = calculatedBurnTime; // Set maxBurnTime when new fuel is consumed
-                    if (!fuelItem.getItem().hasCraftingRemainingItem()) { // Check for items like Lava Bucket
-                        fuelItem.shrink(1);
-                    } else {
-                        items.set(fuelSlot, fuelItem.getItem().getCraftingRemainingItem(fuelItem.copy()));
+                    if (calculatedBurnTime > 0) {
+                        burnTime = calculatedBurnTime;
+                        maxBurnTime = calculatedBurnTime; // Set maxBurnTime when new fuel is consumed
+                        if (!fuelItem.getItem().hasCraftingRemainingItem()) { // Check for items like Lava Bucket
+                            fuelItem.shrink(1);
+                        } else {
+                            items.set(fuelSlot, fuelItem.getItem().getCraftingRemainingItem(fuelItem.copy()));
+                        }
+                        changed = true;
                     }
-                    changed = true;
                 }
             }
         }
 
         if (hasInputItem() && canCraft(pLevel)) {
             if (!usesFuel() || burnTime > 0) {
-                if (!usesFuel() && burnTime <= 0) { // If not using fuel, but somehow burnTime was positive, reset it for logic
-                    // This case might not be strictly necessary if usesFuel() is false, burnTime should remain 0
-                }
                 increaseCraftingProgress();
-                if(!usesFuel()){ // if not using fuel, also decrement burnTime so it doesn't get stuck if it was > 0
-                    // This ensures that if it's a non-fuel furnace, progress happens without fuel consumption logic interference
-                }
                 changed = true;
 
                 if (hasFinished()) {
@@ -362,16 +362,26 @@ public abstract class AbstractFurnaceBlockEntity extends BlockEntity implements 
         }
     }
 
+    @Override
+    public boolean canPlaceItem(int pIndex, ItemStack pStack) {
+        if (pIndex == outputSlot) {
+            return false; // cant put items in output slot
+        }
+        if (pIndex == fuelSlot) {
+            return usesFuel() && isFuelItemValidForFuelSlot(pStack);
+        }
+        return true;
+    }
+
     private int getFuelBurnTime(ItemStack fuel) {
         if (fuel.isEmpty()) {
             return 0;
         }
-        // for industrial use only industrial fuel
-        if (this instanceof IndustrialFurnaceBlockEntity) {
-            if (fuel.getItem() instanceof IndustrialFuelItem industrialFuelItem)
-                return industrialFuelItem.getIndustrialBurnTime();
-            return 0;
+
+        int specificTime = getBurnTimeForSpecificItem(fuel);
+        if (specificTime > 0) {
+            return specificTime;
         }
-        return net.minecraftforge.common.ForgeHooks.getBurnTime(fuel, null); // RecipeType can be null for general fuel
+        return net.minecraftforge.common.ForgeHooks.getBurnTime(fuel, null);
     }
 }

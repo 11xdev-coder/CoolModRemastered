@@ -118,4 +118,14 @@ public class IronFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
     protected AbstractContainerMenu getContainerMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return new IronFurnaceMenu(pContainerId, pPlayerInventory, this, this.data);
     }
+
+    @Override
+    protected int getBurnTimeForSpecificItem(ItemStack stack) {
+        return 0;
+    }
+
+    @Override
+    protected boolean isFuelItemValidForFuelSlot(ItemStack stack) {
+        return true;
+    }
 }

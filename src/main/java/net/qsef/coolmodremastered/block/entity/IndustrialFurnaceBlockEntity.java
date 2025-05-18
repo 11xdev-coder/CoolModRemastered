@@ -15,6 +15,7 @@ import net.minecraft.world.level.block.entity.BlockEntityType;
 import net.minecraft.world.level.block.state.BlockState;
 import net.qsef.coolmodremastered.block.ModBlocks;
 import net.qsef.coolmodremastered.block.base.AbstractFurnaceBlockEntity;
+import net.qsef.coolmodremastered.item.custom.IndustrialFuelItem;
 import net.qsef.coolmodremastered.recipe.IndustrialFurnaceRecipe;
 import net.qsef.coolmodremastered.recipe.ModRecipes;
 import net.qsef.coolmodremastered.screen.IndustrialFurnaceMenu;
@@ -71,5 +72,18 @@ public class IndustrialFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
     @Override
     protected AbstractContainerMenu getContainerMenu(int pContainerId, Inventory pPlayerInventory, Player pPlayer) {
         return new IndustrialFurnaceMenu(pContainerId, pPlayerInventory, this, data);
+    }
+
+    @Override
+    protected int getBurnTimeForSpecificItem(ItemStack stack) {
+        if (stack.getItem() instanceof IndustrialFuelItem fuel) {
+            return fuel.getIndustrialBurnTime();
+        }
+        return 0;
+    }
+
+    @Override
+    protected boolean isFuelItemValidForFuelSlot(ItemStack stack) {
+        return stack.getItem() instanceof IndustrialFuelItem; // only industrial fuel
     }
 }

@@ -33,7 +33,7 @@ public class ModItems {
             () -> new Item(new Item.Properties()));
 
     public static final RegistryObject<Item> Carbon = ITEMS.register("carbon",
-            () -> new IndustrialFuelItem(new Item.Properties(), 400));
+            () -> new IndustrialFuelItem(new Item.Properties(), 800));
 
     public static final RegistryObject<Item> CompressedCharcoal = ITEMS.register("compressed_charcoal",
             () -> new IndustrialFuelItem(new Item.Properties(), 400));
