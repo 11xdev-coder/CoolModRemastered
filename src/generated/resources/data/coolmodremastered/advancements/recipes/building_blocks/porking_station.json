@@ -1,0 +1,48 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_pig_soul": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "coolmodremastered:pig_soul"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_porkchopyonite": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "coolmodremastered:porkchopyonite"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "coolmodremastered:porking_station"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_porkchopyonite",
+      "has_pig_soul"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "coolmodremastered:porking_station"
+    ]
+  },
+  "sends_telemetry_event": false
+}

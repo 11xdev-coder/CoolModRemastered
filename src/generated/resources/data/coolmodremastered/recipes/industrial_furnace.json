@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "b": {
+      "item": "minecraft:blast_furnace"
+    },
+    "g": {
+      "item": "minecraft:iron_ingot"
+    },
+    "i": {
+      "item": "minecraft:iron_block"
+    },
+    "l": {
+      "item": "minecraft:lava_bucket"
+    }
+  },
+  "pattern": [
+    "iii",
+    "blb",
+    "ggg"
+  ],
+  "result": {
+    "item": "coolmodremastered:industrial_furnace"
+  },
+  "show_notification": true
+}

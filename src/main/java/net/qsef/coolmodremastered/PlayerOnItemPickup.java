@@ -5,7 +5,7 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
-import net.minecraft.world.item.crafting.RecipeHolder;
+import net.minecraft.world.item.crafting.Recipe;
 import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.qsef.coolmodremastered.item.ModItems;
@@ -31,16 +31,16 @@ public class PlayerOnItemPickup {
     public static void onItemPickup(PlayerEvent.ItemPickupEvent event) {
         if (event.getEntity() instanceof ServerPlayer serverPlayer) {
             ItemStack stack = event.getStack();
+            if (stack.isEmpty()) {
+                return;
+            }
 
-            Optional<ResourceLocation> optionalId = getAchievementForItem(stack.getItem());
-            if (optionalId.isPresent()) {
-                ResourceLocation id = optionalId.get();
+            Optional<ResourceLocation> optionalRecipeId = getAchievementForItem(stack.getItem());
+            if (optionalRecipeId.isPresent()) {
+                ResourceLocation id = optionalRecipeId.get();
 
-                Optional<? extends RecipeHolder<?>> optionalRecipe = serverPlayer.level().getRecipeManager().byKey(id);
-                if (optionalRecipe.isPresent()) {
-                    RecipeHolder<?> recipe = optionalRecipe.get();
-                    serverPlayer.awardRecipes(Set.of(recipe));
-                }
+                Optional<? extends Recipe<?>> optionalRecipe = serverPlayer.level().getRecipeManager().byKey(id);
+                optionalRecipe.ifPresent(recipe -> serverPlayer.awardRecipes(Set.of(recipe)));
             }
         }
     }

@@ -1,0 +1,18 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "equipment",
+  "key": {
+    "x": {
+      "item": "coolmodremastered:steel_ingot"
+    }
+  },
+  "pattern": [
+    "xxx",
+    "x x",
+    "   "
+  ],
+  "result": {
+    "item": "coolmodremastered:steel_helmet"
+  },
+  "show_notification": true
+}

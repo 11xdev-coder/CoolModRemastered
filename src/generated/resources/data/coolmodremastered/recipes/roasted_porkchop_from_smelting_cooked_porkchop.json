@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:smelting",
+  "category": "food",
+  "cookingtime": 100,
+  "experience": 0.0,
+  "group": "roasted_porkchop",
+  "ingredient": {
+    "item": "minecraft:cooked_porkchop"
+  },
+  "result": "coolmodremastered:roasted_porkchop"
+}

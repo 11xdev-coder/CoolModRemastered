@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "conditions": [
+        {
+          "condition": "minecraft:survives_explosion"
+        }
+      ],
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "coolmodremastered:porkchop_door",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "lower"
+              }
+            }
+          ],
+          "name": "coolmodremastered:porkchop_door"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "coolmodremastered:blocks/porkchop_door"
+}

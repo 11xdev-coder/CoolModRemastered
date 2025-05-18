@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "coolmodremastered:porkchopyonite"
+  },
+  "base": {
+    "item": "minecraft:iron_hoe"
+  },
+  "result": {
+    "item": "coolmodremastered:porkchopyonite_hoe"
+  },
+  "template": {
+    "item": "coolmodremastered:porkchop_upgrade"
+  }
+}

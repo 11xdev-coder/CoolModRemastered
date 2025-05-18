@@ -1,0 +1,27 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "f": {
+      "item": "minecraft:furnace"
+    },
+    "i": {
+      "item": "minecraft:iron_block"
+    },
+    "l": {
+      "item": "minecraft:lava_bucket"
+    },
+    "p": {
+      "item": "minecraft:cooked_porkchop"
+    }
+  },
+  "pattern": [
+    "ipi",
+    "ifi",
+    "ili"
+  ],
+  "result": {
+    "item": "coolmodremastered:iron_furnace"
+  },
+  "show_notification": true
+}

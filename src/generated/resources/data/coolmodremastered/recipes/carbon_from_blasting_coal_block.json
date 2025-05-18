@@ -1,0 +1,11 @@
+{
+  "type": "minecraft:blasting",
+  "category": "misc",
+  "cookingtime": 150,
+  "experience": 1.0,
+  "group": "carbon",
+  "ingredient": {
+    "item": "minecraft:coal_block"
+  },
+  "result": "coolmodremastered:carbon"
+}

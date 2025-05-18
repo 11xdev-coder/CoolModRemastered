@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_porkchopyonite": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "coolmodremastered:porkchopyonite"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "coolmodremastered:porkchop_block"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_porkchopyonite"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "coolmodremastered:porkchop_block"
+    ]
+  },
+  "sends_telemetry_event": false
+}

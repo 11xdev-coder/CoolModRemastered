@@ -3,8 +3,7 @@ package net.qsef.coolmodremastered.network;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.util.profiling.jfr.event.NetworkSummaryEvent;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -27,12 +26,17 @@ public class S2C_ExplosionParticlesPacket {
         buffer.writeDouble(packet.z);
     }
 
-    public void handle(CustomPayloadEvent.Context context) {
+    public static boolean handle(S2C_ExplosionParticlesPacket packet, Supplier<NetworkEvent.Context> contextSupplier) {
+        NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
-            Minecraft mc = Minecraft.getInstance();
-            assert mc.level != null;
-            mc.level.addParticle(ParticleTypes.EXPLOSION_EMITTER, x, y, z, 0, 0, 0);
+            // ensure client-side
+            if (context.getDirection().getReceptionSide().isClient()) {
+                Minecraft mc = Minecraft.getInstance();
+                if (mc.level != null) {
+                    mc.level.addParticle(ParticleTypes.EXPLOSION_EMITTER, packet.x, packet.y, packet.z, 0, 0, 0);
+                }
+            }
         });
-        context.setPacketHandled(true);
+        return true;
     }
 }

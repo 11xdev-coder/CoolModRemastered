@@ -10,8 +10,6 @@ import net.minecraft.util.Mth;
 import net.minecraft.world.entity.player.Inventory;
 import net.qsef.coolmodremastered.CoolModRemastered;
 
-import javax.swing.*;
-
 public class IndustrialFurnaceScreen extends AbstractContainerScreen<IndustrialFurnaceMenu> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(CoolModRemastered.MOD_ID, "textures/gui/industrial_furnace.png");
 
@@ -43,7 +41,7 @@ public class IndustrialFurnaceScreen extends AbstractContainerScreen<IndustrialF
 
     @Override
     public void render(GuiGraphics pGuiGraphics, int pMouseX, int pMouseY, float pPartialTick) {
-        renderBackground(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
+        renderBackground(pGuiGraphics);
 
         super.render(pGuiGraphics, pMouseX, pMouseY, pPartialTick);
 

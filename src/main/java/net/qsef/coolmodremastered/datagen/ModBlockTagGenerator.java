@@ -34,11 +34,13 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
                 .add(ModBlocks.PorkingStation.get());
 
         this.tag(BlockTags.NEEDS_IRON_TOOL)
-                .add(ModBlocks.IronFurnace.get());
+                .add(ModBlocks.IronFurnace.get())
+                .add(ModBlocks.IndustrialFurnace.get());
 
         this.tag(BlockTags.MINEABLE_WITH_PICKAXE)
                 .add(ModBlocks.PorkingStation.get())
-                .add(ModBlocks.IronFurnace.get());
+                .add(ModBlocks.IronFurnace.get())
+                .add(ModBlocks.IndustrialFurnace.get());
 
         this.tag(BlockTags.MINEABLE_WITH_HOE)
                 .add(ModBlocks.PorkchopBlock.get())

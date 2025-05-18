@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "type=bottom": {
+      "model": "coolmodremastered:block/porkchop_slab"
+    },
+    "type=double": {
+      "model": "coolmodremastered:block/porkchop_block"
+    },
+    "type=top": {
+      "model": "coolmodremastered:block/porkchop_slab_top"
+    }
+  }
+}

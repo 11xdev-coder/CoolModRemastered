@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_iron_pickaxe": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "minecraft:iron_pickaxe"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "coolmodremastered:porkchopyonite_pickaxe_from_smithing"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_iron_pickaxe"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "coolmodremastered:porkchopyonite_pickaxe_from_smithing"
+    ]
+  },
+  "sends_telemetry_event": false
+}

@@ -1,0 +1,15 @@
+{
+  "type": "minecraft:smithing_transform",
+  "addition": {
+    "item": "coolmodremastered:porkchopyonite"
+  },
+  "base": {
+    "item": "minecraft:iron_sword"
+  },
+  "result": {
+    "item": "coolmodremastered:porkchopyonite_sword"
+  },
+  "template": {
+    "item": "coolmodremastered:porkchop_upgrade"
+  }
+}

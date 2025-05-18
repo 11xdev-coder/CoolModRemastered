@@ -1,0 +1,9 @@
+{
+  "parent": "minecraft:block/orientable",
+  "textures": {
+    "front": "coolmodremastered:block/iron_furnace_front",
+    "particle": "coolmodremastered:block/iron_furnace_front",
+    "side": "coolmodremastered:block/iron_furnace_side",
+    "top": "coolmodremastered:block/iron_furnace_top"
+  }
+}

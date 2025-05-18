@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "powered=false": {
+      "model": "coolmodremastered:block/porkchop_plate"
+    },
+    "powered=true": {
+      "model": "coolmodremastered:block/porkchop_plate_down"
+    }
+  }
+}

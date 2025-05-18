@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/button",
+  "textures": {
+    "texture": "coolmodremastered:block/porkchop_block"
+  }
+}

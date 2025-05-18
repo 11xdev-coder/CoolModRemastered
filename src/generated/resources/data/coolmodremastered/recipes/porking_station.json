@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "building",
+  "key": {
+    "x": {
+      "item": "coolmodremastered:porkchopyonite"
+    },
+    "y": {
+      "item": "coolmodremastered:pig_soul"
+    }
+  },
+  "pattern": [
+    "xyx",
+    "y y",
+    "xyx"
+  ],
+  "result": {
+    "item": "coolmodremastered:porking_station"
+  },
+  "show_notification": true
+}

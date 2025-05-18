@@ -5,7 +5,7 @@ import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.util.profiling.jfr.event.NetworkSummaryEvent;
 import net.minecraft.world.entity.Entity;
-import net.minecraftforge.event.network.CustomPayloadEvent;
+import net.minecraftforge.network.NetworkEvent;
 
 import java.util.function.Supplier;
 
@@ -31,15 +31,20 @@ public class S2C_PlayerPushPacket {
         buffer.writeDouble(packet.pushZ);
     }
 
-    public void handle(CustomPayloadEvent.Context context) {
+    public static boolean handle(S2C_PlayerPushPacket packet, Supplier<NetworkEvent.Context> contextSupplier) {
+        NetworkEvent.Context context = contextSupplier.get();
         context.enqueueWork(() -> {
-            Minecraft mc = Minecraft.getInstance();
-            assert mc.level != null;
-
-            Entity entity = mc.level.getEntity(entityId);
-            assert entity != null;
-            entity.push(pushX, pushY, pushZ);
+            // ensure client-side
+            if (context.getDirection().getReceptionSide().isClient()) {
+                Minecraft mc = Minecraft.getInstance();
+                if (mc.level != null) {
+                    Entity entity = mc.level.getEntity(packet.entityId);
+                    if (entity != null) {
+                        entity.push(packet.pushX, packet.pushY, packet.pushZ);
+                    }
+                }
+            }
         });
-        context.setPacketHandled(true);
+        return true;
     }
 }

@@ -91,9 +91,9 @@ public class IronFurnaceBlockEntity extends AbstractFurnaceBlockEntity {
 
     private void spawnXp(Level pLevel, BlockPos pPos) {
         if(pLevel instanceof ServerLevel pServerLevel) {
-            RecipeHolder recipeHolder = getCurrentRecipe(pLevel);
-            if(recipeHolder == null) return;
-            Recipe recipe = recipeHolder.value();
+            Optional<? extends Recipe<Container>> recipeHolder = getCurrentRecipe(pLevel);
+            if(recipeHolder.isEmpty()) return;
+            Recipe<?> recipe = recipeHolder.get();
 
             // get xp from the recipe
             float xpAmount = 0;

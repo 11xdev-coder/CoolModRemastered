@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=east": {
+      "model": "coolmodremastered:block/iron_furnace",
+      "y": 270
+    },
+    "facing=north": {
+      "model": "coolmodremastered:block/iron_furnace",
+      "y": 180
+    },
+    "facing=south": {
+      "model": "coolmodremastered:block/iron_furnace"
+    },
+    "facing=west": {
+      "model": "coolmodremastered:block/iron_furnace",
+      "y": 90
+    }
+  }
+}

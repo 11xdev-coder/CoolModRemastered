@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/wall_inventory",
+  "textures": {
+    "wall": "coolmodremastered:block/porkchop_block"
+  }
+}

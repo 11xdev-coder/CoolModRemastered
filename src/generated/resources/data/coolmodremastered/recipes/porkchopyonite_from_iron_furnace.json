@@ -1,0 +1,12 @@
+{
+  "type": "coolmodremastered:iron_furnace_smelting",
+  "experience": 6.0,
+  "group": "porkchopyonite",
+  "input": {
+    "item": "minecraft:cooked_porkchop"
+  },
+  "output": {
+    "Count": 1,
+    "id": "coolmodremastered:porkchopyonite"
+  }
+}

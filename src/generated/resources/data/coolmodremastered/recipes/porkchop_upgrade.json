@@ -1,0 +1,30 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "b": {
+      "item": "minecraft:mutton"
+    },
+    "c": {
+      "item": "minecraft:cooked_porkchop"
+    },
+    "g": {
+      "item": "minecraft:gunpowder"
+    },
+    "p": {
+      "item": "coolmodremastered:porkchopyonite"
+    },
+    "r": {
+      "item": "minecraft:rotten_flesh"
+    }
+  },
+  "pattern": [
+    "grb",
+    "cpb",
+    "cpb"
+  ],
+  "result": {
+    "item": "coolmodremastered:porkchop_upgrade"
+  },
+  "show_notification": true
+}

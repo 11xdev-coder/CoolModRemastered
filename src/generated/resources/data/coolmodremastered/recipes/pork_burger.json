@@ -1,0 +1,21 @@
+{
+  "type": "minecraft:crafting_shaped",
+  "category": "misc",
+  "key": {
+    "x": {
+      "item": "minecraft:bread"
+    },
+    "y": {
+      "item": "minecraft:cooked_porkchop"
+    }
+  },
+  "pattern": [
+    " x ",
+    " y ",
+    " x "
+  ],
+  "result": {
+    "item": "coolmodremastered:pork_burger"
+  },
+  "show_notification": true
+}

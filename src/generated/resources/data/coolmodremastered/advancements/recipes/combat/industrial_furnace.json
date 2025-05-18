@@ -1,0 +1,35 @@
+{
+  "parent": "minecraft:recipes/root",
+  "criteria": {
+    "has_industrial_furnace": {
+      "conditions": {
+        "items": [
+          {
+            "items": [
+              "coolmodremastered:industrial_furnace"
+            ]
+          }
+        ]
+      },
+      "trigger": "minecraft:inventory_changed"
+    },
+    "has_the_recipe": {
+      "conditions": {
+        "recipe": "coolmodremastered:industrial_furnace"
+      },
+      "trigger": "minecraft:recipe_unlocked"
+    }
+  },
+  "requirements": [
+    [
+      "has_the_recipe",
+      "has_industrial_furnace"
+    ]
+  ],
+  "rewards": {
+    "recipes": [
+      "coolmodremastered:industrial_furnace"
+    ]
+  },
+  "sends_telemetry_event": false
+}
