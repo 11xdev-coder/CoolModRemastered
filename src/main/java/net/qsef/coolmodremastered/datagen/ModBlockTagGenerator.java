@@ -54,5 +54,8 @@ public class ModBlockTagGenerator extends BlockTagsProvider {
 
         this.tag(BlockTags.WALLS)
                 .add(ModBlocks.PorkchopWall.get());
+
+        this.tag(BlockTags.RAILS)
+                .add(ModBlocks.CopperRail.get());
     }
 }

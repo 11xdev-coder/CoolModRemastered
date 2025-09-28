@@ -1,7 +1,8 @@
-// 1.20.2	2025-02-24T22:00:51.0261213	Tags for minecraft:block mod id coolmodremastered
+// 1.20.1	2025-09-28T12:03:47.6739567	Tags for minecraft:block mod id coolmodremastered
 79363de23df78d7d0ae29370fe930b4b8c6e6e84 data/coolmodremastered/tags/blocks/porkchop_blocks.json
 79363de23df78d7d0ae29370fe930b4b8c6e6e84 data/minecraft/tags/blocks/mineable/hoe.json
 449a2bfad5bd131bc64d3846644d0c0a22327111 data/minecraft/tags/blocks/mineable/pickaxe.json
 5bdd449eed0d8e8eb06e5a4297bb1b0e4ebccaa1 data/minecraft/tags/blocks/needs_iron_tool.json
 5321611c2fea4c26547fd5bb09ae15601ae70425 data/minecraft/tags/blocks/needs_stone_tool.json
+05746d5b5996679323e2a066b1dbf40775d5d390 data/minecraft/tags/blocks/rails.json
 0a81734314d3c383fd58c6f28edf6c7d4266cd10 data/minecraft/tags/blocks/walls.json

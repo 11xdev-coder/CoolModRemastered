@@ -34,9 +34,9 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
       "has_porkchopyonite",
-      "has_pig_soul"
+      "has_pig_soul",
+      "has_the_recipe"
     ]
   ],
   "rewards": {

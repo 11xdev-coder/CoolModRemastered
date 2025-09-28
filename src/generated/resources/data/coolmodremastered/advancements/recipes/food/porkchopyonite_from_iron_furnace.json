@@ -1,5 +1,4 @@
 {
-  "parent": "minecraft:recipes/root",
   "criteria": {
     "has_cooked_porkchop": {
       "conditions": {
@@ -31,5 +30,5 @@
       "coolmodremastered:porkchopyonite_from_iron_furnace"
     ]
   },
-  "sends_telemetry_event": false
+  "sends_telemetry_event": true
 }

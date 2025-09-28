@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_porkchopyonite"
+      "has_porkchopyonite",
+      "has_the_recipe"
     ]
   ],
   "rewards": {

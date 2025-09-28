@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_bazooka"
+      "has_bazooka",
+      "has_the_recipe"
     ]
   ],
   "rewards": {

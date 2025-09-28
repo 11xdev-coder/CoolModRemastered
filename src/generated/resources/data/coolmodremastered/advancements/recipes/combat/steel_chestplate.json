@@ -22,8 +22,8 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_steel_chestplate"
+      "has_steel_chestplate",
+      "has_the_recipe"
     ]
   ],
   "rewards": {

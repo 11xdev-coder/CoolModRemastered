@@ -1,4 +1,5 @@
-// 1.20.2	2025-02-20T16:59:28.4257166	Loot Tables
+// 1.20.1	2025-07-09T19:27:31.4491248	Loot Tables
+3ee34200f9a680dac528a02f6891ba26347598be data/coolmodremastered/loot_tables/blocks/copper_rail.json
 fd9df65235b6e54ab219f14e943c4b990e8e5386 data/coolmodremastered/loot_tables/blocks/industrial_furnace.json
 27e8aa5c889079381a0fdbc44d282718f71d7048 data/coolmodremastered/loot_tables/blocks/iron_furnace.json
 656761c7bdfd1544bee5f55b70e071367ea44168 data/coolmodremastered/loot_tables/blocks/porkchop_block.json

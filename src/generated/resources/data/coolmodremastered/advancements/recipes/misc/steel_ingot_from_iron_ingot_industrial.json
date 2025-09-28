@@ -1,5 +1,4 @@
 {
-  "parent": "minecraft:recipes/root",
   "criteria": {
     "has_iron_ingot": {
       "conditions": {
@@ -31,5 +30,5 @@
       "coolmodremastered:steel_ingot_from_iron_ingot_industrial"
     ]
   },
-  "sends_telemetry_event": false
+  "sends_telemetry_event": true
 }

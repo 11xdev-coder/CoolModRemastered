@@ -2,11 +2,10 @@
   "type": "coolmodremastered:industrial",
   "experience": 1.0,
   "group": "steel_ingot",
-  "input": {
+  "ingredient": {
     "item": "minecraft:iron_ingot"
   },
-  "output": {
-    "Count": 1,
-    "id": "coolmodremastered:steel_ingot"
+  "result": {
+    "item": "coolmodremastered:steel_ingot"
   }
 }

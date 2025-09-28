@@ -27,6 +27,8 @@ public class ModCreativeModeTabs {
                         output.accept(ModItems.Bazooka.get());
                         output.accept(ModBlocks.IndustrialFurnace.get());
 
+                        output.accept(ModBlocks.CopperRail.get());
+
                         output.accept(ModItems.SteelHelmet.get());
                         output.accept(ModItems.SteelChestplate.get());
                         output.accept(ModItems.SteelLeggings.get());

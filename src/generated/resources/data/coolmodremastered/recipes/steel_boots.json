@@ -8,8 +8,7 @@
   },
   "pattern": [
     "x x",
-    "x x",
-    "   "
+    "x x"
   ],
   "result": {
     "item": "coolmodremastered:steel_boots"

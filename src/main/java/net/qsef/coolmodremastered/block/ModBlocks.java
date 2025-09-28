@@ -11,6 +11,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import net.qsef.coolmodremastered.CoolModRemastered;
+import net.qsef.coolmodremastered.block.custom.CopperRail;
 import net.qsef.coolmodremastered.block.custom.IndustrialFurnaceBlock;
 import net.qsef.coolmodremastered.block.custom.IronFurnaceBlock;
 import net.qsef.coolmodremastered.block.custom.PorkingStation;
@@ -72,6 +73,13 @@ public class ModBlocks {
             () -> new IndustrialFurnaceBlock(BlockBehaviour.Properties.copy(Blocks.IRON_BLOCK)
                     .requiresCorrectToolForDrops()));
 
+    public static final RegistryObject<Block> CopperRail = registerBlock("copper_rail",
+            () -> new CopperRail(BlockBehaviour.Properties.of()
+                    .sound(SoundType.METAL)
+                    .strength(0.7f)
+                    .requiresCorrectToolForDrops()
+                    .noOcclusion()
+                    .noCollission()));
     // example ore block
 //    private static final RegistryObject<Block> ORE_BLOCK = registerBlock("ore_block",
 //            () -> new DropExperienceBlock(BlockBehaviour.Properties.copy(Blocks.STONE)

@@ -39,6 +39,7 @@ public class ModBlockLootTables extends BlockLootSubProvider {
         this.dropSelf(ModBlocks.PorkingStation.get());
         this.dropSelf(ModBlocks.IronFurnace.get());
         this.dropSelf(ModBlocks.IndustrialFurnace.get());
+        this.dropSelf(ModBlocks.CopperRail.get());
 
         // porkchop
         this.add(ModBlocks.PorkchopBlock.get(), createPorkchopBlockTable(6, 8, ModBlocks.PorkchopBlock.get()));
